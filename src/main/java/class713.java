@@ -38,6 +38,8 @@ public class class713 {
    public final int field6578;
    @deob.ObfuscatedName("ow.aq")
    public int field6599;
+   /** Radius, in tiles, the visibility grids are allocated for; {@link #field6599} never exceeds it. */
+   public final int gridRadius;
    @deob.ObfuscatedName("ow.o")
    public class889 field6572;
    @deob.ObfuscatedName("ow.s")
@@ -137,6 +139,7 @@ public class class713 {
       this.field6577 = arg3;
       this.field6578 = arg4;
       this.field6599 = arg5;
+      this.gridRadius = arg5;
       this.field6572 = new class889();
       this.field6566 = new class709(this);
       this.field6581 = new class703[arg2][this.field6577][this.field6578];
@@ -169,10 +172,21 @@ public class class713 {
       this.field6575 = 0;
       this.field6602 = new class290[5026];
       this.field6591 = 0;
-      this.field6616 = new boolean[this.field6599 + this.field6599 + 1][this.field6599 + this.field6599 + 1];
-      this.field6624 = new boolean[this.field6599 + this.field6599 + 2][this.field6599 + this.field6599 + 2];
-      this.field6568 = new int[this.field6599 + this.field6599 + 2];
+      this.field6616 = new boolean[this.gridRadius + this.gridRadius + 1][this.gridRadius + this.gridRadius + 1];
+      this.field6624 = new boolean[this.gridRadius + this.gridRadius + 2][this.gridRadius + this.gridRadius + 2];
+      this.field6568 = new int[this.gridRadius + this.gridRadius + 2];
       this.field6589 = new class693(false);
+   }
+
+   /** Moves the meshed radius (in tiles) without rebuilding the scene; clamped to the allocated grid. */
+   public void setRenderRadius(int arg0) {
+      if (arg0 < 8) {
+         arg0 = 8;
+      } else if (arg0 > this.gridRadius) {
+         arg0 = this.gridRadius;
+      }
+
+      this.field6599 = arg0;
    }
 
    @deob.ObfuscatedName("ow.n(II)V")
@@ -1040,7 +1054,7 @@ public class class713 {
          }
       } else {
          if (this.field6627 == null) {
-            this.field6627 = new boolean[this.field6599 + this.field6599 + 2][this.field6599 + this.field6599 + 2];
+            this.field6627 = new boolean[this.gridRadius + this.gridRadius + 2][this.gridRadius + this.gridRadius + 2];
          }
 
          for(int var32 = 0; var32 < this.field6627.length; ++var32) {
@@ -1154,15 +1168,10 @@ public class class713 {
       if ((arg4 & 2) == 0) {
          for(int var12 = 0; var12 < this.field6614; ++var12) {
             if (var12 >= arg2 && arg1 != null) {
-               int var13 = this.field6616.length;
-               if (this.field6612 + this.field6616.length > this.field6577) {
-                  var13 -= this.field6612 + this.field6616.length - this.field6577;
-               }
-
-               int var14 = this.field6616[0].length;
-               if (this.field6610 + this.field6616[0].length > this.field6578) {
-                  var14 -= this.field6610 + this.field6616[0].length - this.field6578;
-               }
+               // Grid index field6625 is tile field6612, so the low-edge offset belongs in the end
+               // bound too: tiles [field6612, field6577) map to [field6625, field6625 + w - field6612).
+               int var13 = Math.min(this.field6599 + this.field6599 + 1, this.field6625 + this.field6577 - this.field6612);
+               int var14 = Math.min(this.field6599 + this.field6599 + 1, this.field6601 + this.field6578 - this.field6610);
 
                boolean[][] var15 = this.field6624;
                if (this.field6574) {
@@ -1192,15 +1201,8 @@ public class class713 {
 
                this.field6580[var12].method7262(this.field6603, this.field6604, this.field6599, this.field6624, false, arg4);
             } else {
-               int var21 = this.field6616.length;
-               if (this.field6612 + this.field6616.length > this.field6577) {
-                  var21 -= this.field6612 + this.field6616.length - this.field6577;
-               }
-
-               int var22 = this.field6616[0].length;
-               if (this.field6610 + this.field6616[0].length > this.field6578) {
-                  var22 -= this.field6610 + this.field6616[0].length - this.field6578;
-               }
+               int var21 = Math.min(this.field6599 + this.field6599 + 1, this.field6625 + this.field6577 - this.field6612);
+               int var22 = Math.min(this.field6599 + this.field6599 + 1, this.field6601 + this.field6578 - this.field6610);
 
                boolean[][] var23 = this.field6624;
                if (this.field6574) {

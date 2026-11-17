@@ -30,10 +30,17 @@ import java.util.Map;
  * <pre>
  * ./gradlew run
  * ./gradlew run --args="http://127.0.0.1:8080/jav_config.ws 18=2 8=2"
+ * ./gradlew run --args="http://127.0.0.1:8080/jav_config.ws fps=120"   (FPS_LIMIT sets the default, -1 draws uncapped)
  * </pre>
  */
 public final class AppletViewer implements AppletStub, AppletContext {
-    private static final String IP_ADDRESS = "15.204.91.129";
+    private static final String IP_ADDRESS = "127.0.0.1";
+    /**
+     * Frame limit handed to the client: -1 draws uncapped. A {@code fps=...} argument, a
+     * {@code param=fps=...} entry in jav_config.ws or the {@code -Dgame.fps=...} property override it.
+     */
+    private static final int FPS_LIMIT = 180;
+
     private final Map<String, String> config = new HashMap<String, String>();
     private final Map<String, String> params = new HashMap<String, String>();
     private Applet applet;
@@ -143,6 +150,9 @@ public final class AppletViewer implements AppletStub, AppletContext {
         for (String override : overrides) {
             put(override);
         }
+        if (!params.containsKey("fps")) {
+            params.put("fps", Integer.toString(FPS_LIMIT));
+        }
         // The world's jav_config advertises the address it expects clients on (the live host).
         // When it is fetched from somewhere else, as it is locally, point the client there.
         pointAtConfigHost(configUrl);
@@ -201,7 +211,10 @@ public final class AppletViewer implements AppletStub, AppletContext {
         }
     }
 
-    /** Overrides: a numeric key is an applet param (18=2), anything else a jav_config entry (codebase=...). */
+    /**
+     * Overrides: a numeric key is an applet param (18=2), {@code fps} is the one named parameter the client
+     * reads from the applet (frame limit, -1 for none), anything else a jav_config entry (codebase=...).
+     */
     private void put(String param) {
         int split = param.indexOf('=');
         if (split <= 0) {
@@ -209,7 +222,7 @@ public final class AppletViewer implements AppletStub, AppletContext {
         }
         String key = param.substring(0, split);
         String value = param.substring(split + 1);
-        if (key.matches("[0-9]+")) {
+        if (key.matches("[0-9]+") || key.equals("fps")) {
             params.put(key, value);
         } else {
             config.put(key, value);
