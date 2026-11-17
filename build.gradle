@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(8))
+    }
+
+    sourceCompatibility = JavaVersion.VERSION_1_6
+}
+
+application {
+    mainClass = "AppletViewer"
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'AppletViewer'
+        )
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.withType(JavaExec) {
+    workingDir = project.rootDir
+    jvmArgs = ['-Xms512m', '-Xmx512m', '-Xss2m', '-Dsun.java2d.noddraw=true', '-XX:CompileThreshold=1500']
+}
+
+// jaclib.dll imports jawt.dll, and that file (with the rest of the JDK's JRE libraries) lives in the
+// JDK's jre\bin, which is not on the DLL search path when java.exe runs from the JDK's bin directory.
+// Windows resolves those imports through PATH before any Java code runs, so the run task sets it.
+def toolchainHome = javaToolchains
+        .launcherFor { languageVersion = JavaLanguageVersion.of(8) }
+        .get()
+        .metadata
+        .installationPath
+        .asFile
+tasks.named('run') {
+    environment 'PATH', [
+            new File(toolchainHome, 'jre/bin'),
+            new File(toolchainHome, 'bin'),
+            System.getenv('PATH')
+    ].findAll { it != null && it.toString() }.join(File.pathSeparator)
+}
