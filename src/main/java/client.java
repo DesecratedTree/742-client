@@ -581,6 +581,13 @@ public final class client extends class671 {
    public static short field2683;
    @deob.ObfuscatedName("client.ua")
    public static short field2627;
+   // Camera distance zoom in thousandths of a percent (100000 = 100%), changed by Ctrl+scroll and
+   // eased toward its target each frame so the camera glides instead of snapping (OSHD-style).
+   private static int cameraZoom = 100000;
+   private static int cameraZoomTarget = 100000;
+   private static final int CAMERA_ZOOM_STEP = 10000;
+   private static final int CAMERA_ZOOM_MIN = 40000;
+   private static final int CAMERA_ZOOM_MAX = 250000;
    @deob.ObfuscatedName("client.ut")
    public static short field2629;
    @deob.ObfuscatedName("client.ud")
@@ -1069,6 +1076,30 @@ public final class client extends class671 {
                   }
                }
             }
+         }
+
+         if (field2718 != 0 && Statics.field2111.method1803(82) && !Statics.field2111.method1803(81) && !class319.method9100() && Statics.field5998 == 4 && field2601 != null) {
+            int zoomMouseX = Statics.field336.method1896();
+            int zoomMouseY = Statics.field336.method1897();
+            if (zoomMouseX >= field2689 && zoomMouseX < field2689 + field2431 && zoomMouseY >= field2690 && zoomMouseY < field2690 + field2692) {
+               cameraZoomTarget += field2718 * CAMERA_ZOOM_STEP;
+               if (cameraZoomTarget < CAMERA_ZOOM_MIN) {
+                  cameraZoomTarget = CAMERA_ZOOM_MIN;
+               }
+               if (cameraZoomTarget > CAMERA_ZOOM_MAX) {
+                  cameraZoomTarget = CAMERA_ZOOM_MAX;
+               }
+               field2718 = 0;
+            }
+         }
+
+         // Ease the camera distance toward the wheel target so zooming glides instead of snapping.
+         if (cameraZoom != cameraZoomTarget) {
+            int zoomStep = (cameraZoomTarget - cameraZoom) / 4;
+            if (zoomStep == 0) {
+               zoomStep = cameraZoomTarget > cameraZoom ? 1 : -1;
+            }
+            cameraZoom += zoomStep;
          }
 
          if (class319.method9100()) {
@@ -6856,7 +6887,7 @@ public final class client extends class671 {
       }
 
       int var8 = (field2627 - field2683) * var7 / 100 + field2683;
-      int var9 = arg5 * var8 >> 8;
+      int var9 = (int)((long)arg5 * var8 * cameraZoom / 25600000L);
       int var10 = 16384 - arg3 & 16383;
       int var11 = 16384 - arg4 & 16383;
       int var12 = 0;
