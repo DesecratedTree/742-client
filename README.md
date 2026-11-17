@@ -1,2 +1,2 @@
 # 742-client
-742 Client modified
+Modified RuneScape revision 742 client with RustCity 742 compatibility. 
