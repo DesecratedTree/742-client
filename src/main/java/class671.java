@@ -24,6 +24,16 @@ import java.net.URL;
 public abstract class class671 implements class670, Runnable, FocusListener, WindowListener {
    @deob.ObfuscatedName("nh.k")
    private static long field6118 = 20000000L;
+   /**
+    * Frames per second the client draws at unless told otherwise. The game cycles at {@link #field6118}
+    * regardless, so frames are never tied to the 50 tps cycle.
+    */
+   private static final int field6134 = 180;
+   /**
+    * The longest gap in game time one pass will replay. A larger gap is the client having been suspended
+    * (the machine slept, the window was held) rather than a hitch worth catching up on.
+    */
+   private static final long field6135 = 2000000000L;
    @deob.ObfuscatedName("nh.d")
    public static int field6099 = 0;
    @deob.ObfuscatedName("nh.p")
@@ -647,23 +657,110 @@ public abstract class class671 implements class670, Runnable, FocusListener, Win
       this.method4822();
       Statics.field1166 = class672.method15477();
 
-      while(field6127 == 0L || class431.method2169() < field6127) {
-         Statics.field6115 = Statics.field1166.method9845(field6118);
+      // The frame limit comes from the game.fps system property or the "fps" applet parameter. A limit of
+      // -1 (or any other non-positive value) draws as fast as the machine allows.
+      int fpsLimit = field6134;
+      try {
+         String fpsSetting = System.getProperty("game.fps");
+         if (fpsSetting == null && Statics.field6978 != null) {
+            fpsSetting = Statics.field6978.getParameter("fps");
+         }
 
-         for(int var5 = 0; var5 < Statics.field6115; ++var5) {
+         if (fpsSetting != null) {
+            fpsLimit = Integer.parseInt(fpsSetting.trim());
+         }
+      } catch (NumberFormatException varFps) {
+         // Not a number: keep the default limit.
+      }
+
+      long frameInterval = fpsLimit > 0 ? 1000000000L / (long)fpsLimit : 0L;
+
+      // One cycle is banked up front so the first pass always ticks before it draws: the client's screens
+      // are built by the cycle (drawing first, as in the loading state at startup, finds them missing).
+      long var5 = System.nanoTime();
+      long var9 = var5 - field6118;
+      long var7 = var5;
+      long renderCost = 0L;
+
+      while(field6127 == 0L || class431.method2169() < field6127) {
+         // With a limit set, each pass sleeps until whichever comes first, the next owed game cycle or the
+         // next frame, so the 20 ms cycles keep their spacing instead of snapping to frame boundaries while
+         // frames still draw at their own rate. An uncapped limit sleeps only until the next cycle and draws
+         // every pass. Cycles are counted from the monotonic clock rather than from the frames drawn or from
+         // the pacing timer's clock (which the loading screen realigns through method743), so the tick rate
+         // tracks real time either way, and a hitch is paid back in full: the pacing timer clamps its own
+         // catch-up at ten cycles, which no longer costs any tick time here.
+         long var11 = var9 + field6118;
+         // A frame that would still be drawing when the next cycle comes due gives way to that cycle, so the
+         // renderer and the AWT pump after it cannot hold an owed cycle up. The deadline grid is untouched:
+         // the frame is drawn right after the cycle, on the same grid.
+         boolean holdFrame = (frameInterval == 0L || var5 >= var7) && var11 - var5 <= renderCost;
+
+         long wakeAt;
+         if (holdFrame) {
+            wakeAt = var11;
+         } else if (frameInterval == 0L) {
+            wakeAt = var5;
+         } else {
+            wakeAt = var7 < var11 ? var7 : var11;
+         }
+
+         long var13 = wakeAt > var5 ? wakeAt - var5 : 0L;
+         Statics.field1166.method9845(var13);
+
+         var5 = System.nanoTime();
+         if (var5 < var9) {
+            // The clock went backwards (re-based timer): carry on from it rather than waiting for it.
+            var9 = var5;
+         } else if (var5 - var9 > field6135) {
+            // Only the most recent part of a long gap is replayed; the rest is a suspension, not a hitch.
+            var9 = var5 - field6135;
+         }
+
+         Statics.field6115 = 0;
+
+         while(var5 - var9 >= field6118) {
+            var9 += field6118;
+            ++Statics.field6115;
             this.method9765();
          }
 
-         this.method9766();
-         method9492(Statics.field5796);
+         // Checked again after those cycles: one may have come due while this pass was asleep.
+         if ((frameInterval == 0L || var5 >= var7) && var9 + field6118 - var5 > renderCost) {
+            long frameStart = System.nanoTime();
+            this.method9766();
+            method9492(Statics.field5796, var9 + field6118);
+            renderCost = System.nanoTime() - frameStart;
+            if (renderCost > field6118 * 3L / 4L) {
+               // Keep the estimate below one cycle, so an occasional slow frame cannot starve the frames.
+               renderCost = field6118 * 3L / 4L;
+            }
+
+            if (frameInterval != 0L) {
+               var7 += frameInterval;
+               if (var7 <= var5) {
+                  // Frames fell behind (a stall): draw the current state next time, not a backlog of frames.
+                  var7 = var5 + frameInterval;
+                              }
+            }
+         }
       }
 
    }
 
+
    @deob.ObfuscatedName("mt.t(Ljava/lang/Object;I)V")
    public static void method9492(Object arg0) {
+      method9492(arg0, Long.MAX_VALUE);
+   }
+
+   /**
+    * Delivers queued AWT events, yielding for at most one millisecond per pending event and only while
+    * nothing is due before {@code arg1} (a game cycle deadline), so pumping events never delays a cycle.
+    */
+   public static void method9492(Object arg0, long arg1) {
       if (Statics.field6666 != null) {
-         for(int var1 = 0; var1 < 50 && Statics.field6666.peekEvent() != null; ++var1) {
+         for(int var1 = 0; var1 < 50 && Statics.field6666.peekEvent() != null && System.nanoTime() < arg1; ++var1) {
             Statics.method14813(1L);
          }
 
