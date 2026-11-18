@@ -7,3 +7,14 @@
 ╚██████╗╚██████╔╝███████║   ██║   ╚██████╗██║   ██║      ██║          ██║       ██║███████╗
  ╚═════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝╚═╝   ╚═╝      ╚═╝          ╚═╝       ╚═╝╚══════╝
 ```
+
+## Building & Running
+TODO
+
+## Features
+```
+- Increased Render Distance
+- HDOS style zooming / fog
+- Uncapped FPS
+- Configurable fields (RSA, IP, Port, Subrevision, etc)
+```
