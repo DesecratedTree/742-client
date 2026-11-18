@@ -1,4 +1,4 @@
-# Custom 742 client for (RustCityRS)[https://github.com/RustCityRS/rs-majula]
+# Custom 742 client for [RustCityRS](https://github.com/RustCityRS/rs-majula)
 ```
  ██████╗██╗   ██╗███████╗████████╗ ██████╗██╗████████╗██╗   ██╗    ███████╗██╗  ██╗██████╗ 
 ██╔════╝██║   ██║██╔════╝╚══██╔══╝██╔════╝██║╚══██╔══╝╚██╗ ██╔╝    ╚════██║██║  ██║╚════██╗
