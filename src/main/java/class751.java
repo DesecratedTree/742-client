@@ -213,10 +213,8 @@ public class class751 {
    public void method11122() {
       byte var1 = 0;
       int var2 = (this.field6923.field7064 + 256 << 2) + var1;
-      // The fog end is derived from the far plane by the renderers, so it already moves out with the
-      // render distance; scaling the band by the same factor keeps the fade proportional instead of
-      // leaving a thin fog wall at the horizon.
-      int var3 = (int)((long)var2 * client.renderDistance / 100000L);
+      // The fog end follows the far plane, so only the band has to scale with the render distance.
+      int var3 = (int)((long)var2 * client.renderDistancePercent / 100L);
       this.field6925.method7550(this.field6923.field7062, Statics.field9361.field986.method2119() == 1 ? var3 : -1, 0);
    }
 

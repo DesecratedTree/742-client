@@ -586,15 +586,11 @@ public final class client extends class671 {
    private static int cameraZoom = 100000;
    private static int cameraZoomTarget = 100000;
    private static final int CAMERA_ZOOM_STEP = 10000;
-   private static final int CAMERA_ZOOM_MIN = 40000;
-   private static final int CAMERA_ZOOM_MAX = 250000;
-   // Render distance in the same thousandths convention, changed by Alt+scroll. It scales the meshed
-   // terrain radius and the far plane together, eased like the zoom so the horizon grows smoothly;
-   // class658 clamps both to the loaded scene.
-   public static int renderDistance = 100000;
-   private static int renderDistanceTarget = 100000;
-   private static final int RENDER_DISTANCE_STEP = 10000;
-   private static final int RENDER_DISTANCE_MIN = 50000;
+   // Render distance in percent of the graphics preference (100 = default), changed by Alt+scroll.
+   // class658 scales the meshed radius and the far plane by it, clamped to the loaded scene.
+   public static int renderDistancePercent = 100;
+   private static int renderDistancePercentTarget = 100;
+   private static final int RENDER_DISTANCE_STEP = 10;
    @deob.ObfuscatedName("client.ut")
    public static short field2629;
    @deob.ObfuscatedName("client.ud")
@@ -694,6 +690,24 @@ public final class client extends class671 {
       field2705 = -1L;
       field2706 = -1L;
       field2723 = new int[4];
+   }
+
+   private static int clamp(int value, int min, int max) {
+      if (value < min) {
+         return min;
+      } else {
+         return value > max ? max : value;
+      }
+   }
+
+   /** Moves a value a quarter of the way to its target, at least one step, so wheel changes glide. */
+   private static int ease(int current, int target) {
+      if (current == target) {
+         return current;
+      }
+
+      int step = (target - current) / 4;
+      return current + (step != 0 ? step : (target > current ? 1 : -1));
    }
 
    public final void init() {
@@ -886,7 +900,7 @@ public final class client extends class671 {
             var8 = 0;
          }
 
-         this.method9780(var6, field2584.field7302, var7, var8, class421.method5520(), 742, 1, field2405);
+         this.method9780(var6, field2584.field7302, var7, var8, class421.method5520(), ClientConfig.REVISION, ClientConfig.SUBREVISION, field2405);
       }
    }
 
@@ -945,6 +959,23 @@ public final class client extends class671 {
          Statics.field8792.field8852 = Statics.field8792.field8851 + 50000;
       }
 
+      // ClientConfig wins over jav_config's environment-specific hosts and ports.
+      if (Statics.field8792 == null) {
+         Statics.field8792 = new class873();
+      }
+
+      if (Statics.field8790 == null) {
+         Statics.field8790 = new class873();
+      }
+
+      Statics.field8792.field8849 = ClientConfig.SERVER_HOST;
+      Statics.field8790.field8849 = ClientConfig.SERVER_HOST;
+      if (ClientConfig.SERVER_PORT > 0) {
+         Statics.field8792.field8850 = ClientConfig.SERVER_PORT;
+         Statics.field8792.field8852 = ClientConfig.SERVER_PORT;
+         Statics.field8790.field8850 = ClientConfig.SERVER_PORT;
+         Statics.field8790.field8852 = ClientConfig.SERVER_PORT;
+      }
       Statics.field8789 = Statics.field8790;
       if (field2584 == class801.field7297) {
          field2536 = false;
@@ -1085,59 +1116,32 @@ public final class client extends class671 {
             }
          }
 
-         if (field2718 != 0 && Statics.field2111.method1803(82) && !Statics.field2111.method1803(81) && !Statics.field2111.method1803(86) && !class319.method9100() && Statics.field5998 == 4 && field2601 != null) {
-            int zoomMouseX = Statics.field336.method1896();
-            int zoomMouseY = Statics.field336.method1897();
-            if (zoomMouseX >= field2689 && zoomMouseX < field2689 + field2431 && zoomMouseY >= field2690 && zoomMouseY < field2690 + field2692) {
-               cameraZoomTarget += field2718 * CAMERA_ZOOM_STEP;
-               if (cameraZoomTarget < CAMERA_ZOOM_MIN) {
-                  cameraZoomTarget = CAMERA_ZOOM_MIN;
+         // Wheel over the 3D viewport: Ctrl zooms, Alt changes the render distance, Shift stays free.
+         if (field2718 != 0 && field2601 != null && Statics.field5998 == 4 && !class319.method9100() && !Statics.field2111.method1803(81)) {
+            int mouseX = Statics.field336.method1896();
+            int mouseY = Statics.field336.method1897();
+            if (mouseX >= field2689 && mouseX < field2689 + field2431 && mouseY >= field2690 && mouseY < field2690 + field2692) {
+               boolean ctrl = Statics.field2111.method1803(82);
+               boolean alt = Statics.field2111.method1803(86);
+               if (ctrl != alt) {
+                  if (ctrl) {
+                     cameraZoomTarget = clamp(cameraZoomTarget + field2718 * CAMERA_ZOOM_STEP, ClientConfig.ZOOM_MIN, ClientConfig.ZOOM_MAX);
+                  } else {
+                     int maxRenderDistance = field2468.maxRenderDistancePercent();
+                     if (ClientConfig.RENDER_DISTANCE_MAX > 0 && ClientConfig.RENDER_DISTANCE_MAX < maxRenderDistance) {
+                        maxRenderDistance = ClientConfig.RENDER_DISTANCE_MAX;
+                     }
+
+                     renderDistancePercentTarget = clamp(renderDistancePercentTarget + field2718 * RENDER_DISTANCE_STEP, ClientConfig.RENDER_DISTANCE_MIN, maxRenderDistance);
+                  }
+
+                  field2718 = 0;
                }
-               if (cameraZoomTarget > CAMERA_ZOOM_MAX) {
-                  cameraZoomTarget = CAMERA_ZOOM_MAX;
-               }
-               field2718 = 0;
             }
          }
 
-         if (field2718 != 0 && Statics.field2111.method1803(86) && !Statics.field2111.method1803(82) && !Statics.field2111.method1803(81) && !class319.method9100() && Statics.field5998 == 4 && field2601 != null) {
-            int distanceMouseX = Statics.field336.method1896();
-            int distanceMouseY = Statics.field336.method1897();
-            if (distanceMouseX >= field2689 && distanceMouseX < field2689 + field2431 && distanceMouseY >= field2690 && distanceMouseY < field2690 + field2692) {
-               renderDistanceTarget += field2718 * RENDER_DISTANCE_STEP;
-               if (renderDistanceTarget < RENDER_DISTANCE_MIN) {
-                  renderDistanceTarget = RENDER_DISTANCE_MIN;
-               }
-
-               int renderDistanceMax = field2468.maxRenderDistanceScale();
-               if (renderDistanceTarget > renderDistanceMax) {
-                  renderDistanceTarget = renderDistanceMax;
-               }
-
-               field2718 = 0;
-            }
-         }
-
-         // Ease the camera distance toward the wheel target so zooming glides instead of snapping.
-         if (cameraZoom != cameraZoomTarget) {
-            int zoomStep = (cameraZoomTarget - cameraZoom) / 4;
-            if (zoomStep == 0) {
-               zoomStep = cameraZoomTarget > cameraZoom ? 1 : -1;
-            }
-            cameraZoom += zoomStep;
-         }
-
-         // Ease the render distance the same way and hand it to the scene manager, which clamps the
-         // meshed radius and the far plane to the loaded scene every frame.
-         if (renderDistance != renderDistanceTarget) {
-            int distanceStep = (renderDistanceTarget - renderDistance) / 4;
-            if (distanceStep == 0) {
-               distanceStep = renderDistanceTarget > renderDistance ? 1 : -1;
-            }
-
-            renderDistance += distanceStep;
-         }
-
+         cameraZoom = ease(cameraZoom, cameraZoomTarget);
+         renderDistancePercent = ease(renderDistancePercent, renderDistancePercentTarget);
          field2468.applyRenderDistance();
 
          if (class319.method9100()) {

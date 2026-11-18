@@ -97,6 +97,7 @@ public class class658 {
 
    /** Terrain radius (tiles) the graphics preference asks for; the render distance scales this. */
    private int baseRenderRadius = 1;
+   private int appliedRenderRadius = -1;
 
    public class658(boolean arg0) {
       this.field6007 = arg0;
@@ -163,9 +164,8 @@ public class class658 {
          return this.field6000;
       }
 
-      // The far plane follows the render distance, but never reaches past the radius the scene is
-      // actually meshed with, so the terrain never ends inside the frustum.
-      long var1 = (long)this.field6000 * client.renderDistance / 100000L;
+      // The far plane follows the render distance, but never reaches past the meshed radius.
+      long var1 = (long)this.field6000 * client.renderDistancePercent / 100L;
       long var3 = (long)this.maxRenderDistance();
       long var5 = (long)(this.field6000 / 2);
       if (var1 > var3) {
@@ -184,14 +184,14 @@ public class class658 {
       return Math.min(this.field6010, this.field6022) / 2 * 512;
    }
 
-   /** Largest render distance scale (thousandths) that still fits inside the loaded scene. */
-   public int maxRenderDistanceScale() {
+   /** Largest render distance percent that still fits inside the loaded scene. */
+   public int maxRenderDistancePercent() {
       if (this.field6000 <= 0) {
-         return 100000;
+         return 100;
       }
 
-      long var1 = (long)this.maxRenderDistance() * 100000L / (long)this.field6000;
-      return var1 > 100000L ? (int)var1 : 100000;
+      long var1 = (long)this.maxRenderDistance() * 100L / (long)this.field6000;
+      return var1 > 100L ? (int)var1 : 100;
    }
 
    /** Applies the current render distance to the meshed radius; called once per frame. */
@@ -200,8 +200,8 @@ public class class658 {
          return;
       }
 
-      int var1 = Math.min(this.maxRenderDistance() / 512, this.field6012.gridRadius);
-      int var2 = (int)((long)this.baseRenderRadius * client.renderDistance / 100000L);
+      int var1 = Math.min(this.maxRenderDistance() / 512, this.field6012.maxRenderRadius);
+      int var2 = this.baseRenderRadius * client.renderDistancePercent / 100;
       if (var2 > var1) {
          var2 = var1;
       }
@@ -210,7 +210,10 @@ public class class658 {
          var2 = 8;
       }
 
-      this.field6012.setRenderRadius(var2);
+      if (var2 != this.appliedRenderRadius) {
+         this.appliedRenderRadius = var2;
+         this.field6012.setRenderRadius(var2);
+      }
    }
 
    @deob.ObfuscatedName("mv.v(B)Low;")
@@ -1173,6 +1176,7 @@ public class class658 {
             this.method9534();
             this.method9547();
             this.field6012 = new class713(Statics.field8847, 9, 4, this.field6010, this.field6022, var17, var15, Statics.field8847.method7499() > 0);
+            this.appliedRenderRadius = -1;
             this.field6012.setRenderRadius(this.baseRenderRadius);
             this.applyRenderDistance();
             this.field6012.method10481(false);

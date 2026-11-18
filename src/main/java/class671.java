@@ -28,7 +28,7 @@ public abstract class class671 implements class670, Runnable, FocusListener, Win
     * Frames per second the client draws at unless told otherwise. The game cycles at {@link #field6118}
     * regardless, so frames are never tied to the 50 tps cycle.
     */
-   private static final int field6134 = 180;
+   private static final int field6134 = ClientConfig.FPS_LIMIT;
    /**
     * The longest gap in game time one pass will replay. A larger gap is the client having been suspended
     * (the machine slept, the window was held) rather than a hitch worth catching up on.

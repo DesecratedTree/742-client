@@ -30,17 +30,10 @@ import java.util.Map;
  * <pre>
  * ./gradlew run
  * ./gradlew run --args="http://127.0.0.1:8080/jav_config.ws 18=2 8=2"
- * ./gradlew run --args="http://127.0.0.1:8080/jav_config.ws fps=120"   (FPS_LIMIT sets the default, -1 draws uncapped)
+ * ./gradlew run --args="http://127.0.0.1:8080/jav_config.ws fps=120"   (ClientConfig.FPS_LIMIT sets the default)
  * </pre>
  */
 public final class AppletViewer implements AppletStub, AppletContext {
-    private static final String IP_ADDRESS = "127.0.0.1";
-    /**
-     * Frame limit handed to the client: -1 draws uncapped. A {@code fps=...} argument, a
-     * {@code param=fps=...} entry in jav_config.ws or the {@code -Dgame.fps=...} property override it.
-     */
-    private static final int FPS_LIMIT = 180;
-
     private final Map<String, String> config = new HashMap<String, String>();
     private final Map<String, String> params = new HashMap<String, String>();
     private Applet applet;
@@ -52,7 +45,7 @@ public final class AppletViewer implements AppletStub, AppletContext {
             System.setProperty("java.version", "1.7.0_80");
         }
         prepareNatives();
-        String url = args.length > 0 ? args[0] : "http://" + IP_ADDRESS + ":8080/jav_config.ws";
+        String url = args.length > 0 ? args[0] : ClientConfig.CONFIG_URL;
         String[] overrides = args.length > 1 ? Arrays.copyOfRange(args, 1, args.length) : new String[0];
         new AppletViewer().run(URI.create(url).toURL(), overrides);
     }
@@ -151,11 +144,12 @@ public final class AppletViewer implements AppletStub, AppletContext {
             put(override);
         }
         if (!params.containsKey("fps")) {
-            params.put("fps", Integer.toString(FPS_LIMIT));
+            params.put("fps", Integer.toString(ClientConfig.FPS_LIMIT));
         }
         // The world's jav_config advertises the address it expects clients on (the live host).
         // When it is fetched from somewhere else, as it is locally, point the client there.
         pointAtConfigHost(configUrl);
+        params.put("10", ClientConfig.SERVER_HOST);
         String main = config.containsKey("initial_class") ? config.get("initial_class") : "client.class";
         // The deobfuscated client keeps its original (private) constructor.
         java.lang.reflect.Constructor<?> constructor = Class.forName(main.replace(".class", "")).getDeclaredConstructor();

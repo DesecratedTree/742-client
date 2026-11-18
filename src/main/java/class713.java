@@ -39,7 +39,7 @@ public class class713 {
    @deob.ObfuscatedName("ow.aq")
    public int field6599;
    /** Radius, in tiles, the visibility grids are allocated for; {@link #field6599} never exceeds it. */
-   public final int gridRadius;
+   public final int maxRenderRadius;
    @deob.ObfuscatedName("ow.o")
    public class889 field6572;
    @deob.ObfuscatedName("ow.s")
@@ -139,7 +139,7 @@ public class class713 {
       this.field6577 = arg3;
       this.field6578 = arg4;
       this.field6599 = arg5;
-      this.gridRadius = arg5;
+      this.maxRenderRadius = arg5;
       this.field6572 = new class889();
       this.field6566 = new class709(this);
       this.field6581 = new class703[arg2][this.field6577][this.field6578];
@@ -172,9 +172,9 @@ public class class713 {
       this.field6575 = 0;
       this.field6602 = new class290[5026];
       this.field6591 = 0;
-      this.field6616 = new boolean[this.gridRadius + this.gridRadius + 1][this.gridRadius + this.gridRadius + 1];
-      this.field6624 = new boolean[this.gridRadius + this.gridRadius + 2][this.gridRadius + this.gridRadius + 2];
-      this.field6568 = new int[this.gridRadius + this.gridRadius + 2];
+      this.field6616 = new boolean[this.maxRenderRadius + this.maxRenderRadius + 1][this.maxRenderRadius + this.maxRenderRadius + 1];
+      this.field6624 = new boolean[this.maxRenderRadius + this.maxRenderRadius + 2][this.maxRenderRadius + this.maxRenderRadius + 2];
+      this.field6568 = new int[this.maxRenderRadius + this.maxRenderRadius + 2];
       this.field6589 = new class693(false);
    }
 
@@ -182,8 +182,8 @@ public class class713 {
    public void setRenderRadius(int arg0) {
       if (arg0 < 8) {
          arg0 = 8;
-      } else if (arg0 > this.gridRadius) {
-         arg0 = this.gridRadius;
+      } else if (arg0 > this.maxRenderRadius) {
+         arg0 = this.maxRenderRadius;
       }
 
       this.field6599 = arg0;
@@ -1054,7 +1054,7 @@ public class class713 {
          }
       } else {
          if (this.field6627 == null) {
-            this.field6627 = new boolean[this.gridRadius + this.gridRadius + 2][this.gridRadius + this.gridRadius + 2];
+            this.field6627 = new boolean[this.maxRenderRadius + this.maxRenderRadius + 2][this.maxRenderRadius + this.maxRenderRadius + 2];
          }
 
          for(int var32 = 0; var32 < this.field6627.length; ++var32) {
