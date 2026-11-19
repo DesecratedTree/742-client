@@ -1,4 +1,5 @@
 import java.io.IOException;
+import net.ClientProt;
 
 @deob.ObfuscatedName("me")
 public class class641 {
@@ -21,7 +22,7 @@ public class class641 {
 
             var3.field820 = 0;
             if (!var3.field840 && var3.method1413() != null) {
-               class109 var4 = class109.method15110(class558.field4876, var3.field832);
+               class109 var4 = class109.method15110(ClientProt.NO_TIMEOUT, var3.field832);
                var3.method1408(var4);
 
                try {

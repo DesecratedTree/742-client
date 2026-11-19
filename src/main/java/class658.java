@@ -1,4 +1,5 @@
 import java.util.Iterator;
+import net.ClientProt;
 
 @deob.ObfuscatedName("mv")
 public class class658 {
@@ -1359,7 +1360,7 @@ public class class658 {
             client.method15057();
             class75.method443();
             if (class671.method11178() == class686.field6209 && client.field2463.method1413() != null && client.field2410 == 16) {
-               class109 var27 = class109.method15110(class558.field4809, client.field2463.field832);
+               class109 var27 = class109.method15110(ClientProt.DETECT_MODIFIED_CLIENT, client.field2463.field832);
                var27.field814.method1572(1057001181);
                client.field2463.method1408(var27);
             }
@@ -1393,7 +1394,7 @@ public class class658 {
             } else {
                client.method14844(1);
                if (client.field2463.method1413() != null) {
-                  class109 var34 = class109.method15110(class558.field4845, client.field2463.field832);
+                  class109 var34 = class109.method15110(ClientProt.MAP_BUILD_COMPLETE, client.field2463.field832);
                   client.field2463.method1408(var34);
                }
             }

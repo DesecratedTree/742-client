@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import net.ClientProt;
 
 public class Statics {
    @deob.ObfuscatedName("ct.sb")
@@ -1872,7 +1873,7 @@ public class Statics {
    @deob.ObfuscatedName("qs.b(Ljava/lang/String;I)V")
    public static void method11332(String arg0) {
       if (client.field2410 == 14) {
-         class109 var1 = class109.method15110(class558.field4807, client.field2462.field832);
+         class109 var1 = class109.method15110(ClientProt.UNKNOWN_10, client.field2462.field832);
          var1.field814.method1569(0);
          int var2 = var1.field814.field935;
          var1.field814.method1577(arg0);
@@ -1945,7 +1946,7 @@ public class Statics {
    @deob.ObfuscatedName("cb.b(IZI)V")
    public static void method4441(int arg0, boolean arg1) {
       if (arg1) {
-         class109 var2 = class109.method15110(class558.field4799, client.field2463.field832);
+         class109 var2 = class109.method15110(ClientProt.VIDEO_END, client.field2463.field832);
          var2.field814.method1569(arg0);
          client.field2463.method1408(var2);
       } else {
@@ -2272,7 +2273,7 @@ public class Statics {
       class762.field7009.method11253();
       class762.field7007.method11253();
       if (client.field2458 > 0) {
-         class109 var0 = class109.method15110(class558.field4805, client.field2463.field832);
+         class109 var0 = class109.method15110(ClientProt.EVENT_KEYBOARD, client.field2463.field832);
          var0.field814.method1569(client.field2458 * 4);
 
          for(int var1 = 0; var1 < client.field2458; ++var1) {
@@ -2297,7 +2298,7 @@ public class Statics {
       if (client.field2432 && class762.field7008 <= 0) {
          class762.field7008 = 20;
          client.field2432 = false;
-         class109 var5 = class109.method15110(class558.field4814, client.field2463.field832);
+         class109 var5 = class109.method15110(ClientProt.EVENT_CAMERA_POSITION, client.field2463.field832);
          var5.field814.method1750((int)client.field2603 >> 3);
          var5.field814.method1627((int)client.field2502 >> 3);
          client.field2463.method1408(var5);
@@ -2305,13 +2306,13 @@ public class Statics {
 
       if (class762.field7006 != field6857) {
          class762.field7006 = field6857;
-         class109 var6 = class109.method15110(class558.field4875, client.field2463.field832);
+         class109 var6 = class109.method15110(ClientProt.EVENT_APPLET_FOCUS, client.field2463.field832);
          var6.field814.method1568(field6857 ? 1 : 0);
          client.field2463.method1408(var6);
       }
 
       if (!client.field2419) {
-         class109 var7 = class109.method15110(class558.field4820, client.field2463.field832);
+         class109 var7 = class109.method15110(ClientProt.CLIENT_DETAILOPTIONS_STATUS, client.field2463.field832);
          var7.field814.method1568(0);
          int var8 = var7.field814.field935;
          class124 var9 = field9361.method1884();
@@ -4522,7 +4523,7 @@ public class Statics {
             client.field2703 = -4;
          } else {
             client.field2703 = -1;
-            class109 var2 = class109.method15110(class558.field4793, client.field2462.field832);
+            class109 var2 = class109.method15110(ClientProt.CREATE_CHECK_NAME, client.field2462.field832);
             var2.field814.method1568(0);
             int var3 = var2.field814.field935;
             var2.field814.method1577(var1);
@@ -4749,7 +4750,7 @@ public class Statics {
    @deob.ObfuscatedName("jc.ajg(Lrs;I)V")
    public static final void method7902(class790 arg0) {
       if (client.field2410 == 3) {
-         class109 var1 = class109.method15110(class558.field4881, client.field2462.field832);
+         class109 var1 = class109.method15110(ClientProt.UID_PASSPORT_RESEND_REQUEST, client.field2462.field832);
          client.field2462.method1408(var1);
       }
    }
@@ -4886,7 +4887,7 @@ public class Statics {
    public static final void method15600(String arg0) {
       if (field3105 != null) {
          class110 var1 = method8951();
-         class109 var2 = class109.method15110(class558.field4826, var1.field832);
+         class109 var2 = class109.method15110(ClientProt.CLAN_KICK_USER, var1.field832);
          var2.field814.method1568(class124.method1229(arg0));
          var2.field814.method1577(arg0);
          var1.method1408(var2);
@@ -4905,7 +4906,7 @@ public class Statics {
    public static final void method11491(String arg0) {
       if (!arg0.equals("")) {
          class110 var1 = method8951();
-         class109 var2 = class109.method15110(class558.field4865, var1.field832);
+         class109 var2 = class109.method15110(ClientProt.CLAN_JOINCHAT_LEAVECHAT, var1.field832);
          var2.field814.method1568(class124.method1229(arg0));
          var2.field814.method1577(arg0);
          var1.method1408(var2);
@@ -4970,7 +4971,7 @@ public class Statics {
                   class419.method10919(4, class881.field9031.method15374(field243));
                } else {
                   class110 var11 = method8951();
-                  class109 var12 = class109.method15110(class558.field4819, var11.field832);
+                  class109 var12 = class109.method15110(ClientProt.IGNORELIST_ADD, var11.field832);
                   var12.field814.method1568(class124.method1229(arg0) + 1);
                   var12.field814.method1577(arg0);
                   var12.field814.method1568(arg1 ? 1 : 0);
@@ -5127,3 +5128,4 @@ public class Statics {
       arg0.field7216.method185(arg0.field7203[--arg0.field7204]);
    }
 }
+

@@ -1,3 +1,5 @@
+import net.ClientProt;
+
 @deob.ObfuscatedName("nn")
 public class class677 {
    @deob.ObfuscatedName("nn.a")
@@ -213,7 +215,7 @@ public class class677 {
          field6153 = false;
          Statics.field6775 = null;
       } else if (Statics.field9361.field987.method2319() != 0 && field6149 != -1 && !class417.method5407()) {
-         class109 var21 = class109.method15110(class558.field4800, client.field2463.field832);
+         class109 var21 = class109.method15110(ClientProt.SOUND_SONG_PRELOADED, client.field2463.field832);
          var21.field814.method1572(field6149);
          client.field2463.method1408(var21);
          field6149 = -1;
@@ -414,7 +416,7 @@ public class class677 {
          field6149 = arg0;
          Statics.field6155 = null;
          Statics.field6775 = null;
-         class109 var3 = class109.method15110(class558.field4841, client.field2463.field832);
+         class109 var3 = class109.method15110(ClientProt.SOUND_SONG_END, client.field2463.field832);
          var3.field814.method1572(-1);
          client.field2463.method1408(var3);
       } else {
@@ -495,7 +497,7 @@ public class class677 {
 
    @deob.ObfuscatedName("eq.ai(IB)V")
    public static void method5942(int arg0) {
-      class109 var1 = class109.method15110(class558.field4841, client.field2463.field832);
+      class109 var1 = class109.method15110(ClientProt.SOUND_SONG_END, client.field2463.field832);
       var1.field814.method1572(-1);
       client.field2463.method1408(var1);
       Statics.field6155 = new class430(Statics.field6467, arg0);
@@ -504,7 +506,7 @@ public class class677 {
    @deob.ObfuscatedName("kq.ap(I)V")
    private static void method8528() {
       if (Statics.field6155 != null && !Statics.field6155.method5946() && Statics.field6155.method5954()) {
-         class109 var0 = class109.method15110(class558.field4841, client.field2463.field832);
+         class109 var0 = class109.method15110(ClientProt.SOUND_SONG_END, client.field2463.field832);
          var0.field814.method1572(Statics.field6155.field3587);
          client.field2463.method1408(var0);
       }

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import net.ClientProt;
 
 @deob.ObfuscatedName("t")
 public class class825 {
@@ -31,7 +32,7 @@ public class class825 {
    @deob.ObfuscatedName("pz.r(Ljava/lang/String;Ljava/lang/String;IZI)V")
    public static void method10984(String arg0, String arg1, int arg2, boolean arg3) {
       if (client.field2410 == 14) {
-         class109 var4 = class109.method15110(class558.field4795, client.field2462.field832);
+         class109 var4 = class109.method15110(ClientProt.CREATE_ACCOUNT, client.field2462.field832);
          var4.field814.method1569(0);
          int var5 = var4.field814.field935;
          var4.field814.method1577(arg0);
@@ -54,7 +55,7 @@ public class class825 {
    @deob.ObfuscatedName("en.p(II)V")
    public static void method5914(int arg0) {
       if (client.field2410 == 14) {
-         class109 var1 = class109.method15110(class558.field4873, client.field2462.field832);
+         class109 var1 = class109.method15110(ClientProt.CREATE_LOG_PROGRESS, client.field2462.field832);
          var1.field814.method1568(arg0);
          client.field2462.method1408(var1);
       }
@@ -219,3 +220,4 @@ public class class825 {
 
    }
 }
+

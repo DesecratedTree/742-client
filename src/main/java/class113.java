@@ -1,5 +1,6 @@
 import java.util.LinkedList;
 import java.util.Queue;
+import net.ClientProt;
 
 @deob.ObfuscatedName("aec")
 public class class113 extends class757 {
@@ -19,7 +20,7 @@ public class class113 extends class757 {
    protected void method1489() {
       class254 var1 = (class254)this.field893.poll();
       if (var1 != null) {
-         class109 var2 = class109.method15110(class558.field4842, client.field2463.field832);
+         class109 var2 = class109.method15110(ClientProt.EVENT_NATIVE_MOUSE_CLICK, client.field2463.field832);
          var2.field814.method1750(this.method11251(var1, 65535));
          var2.field814.method1772(var1.method3428() << 1 | var1.method3427() & 1);
          var2.field814.method1635(var1.method1375() | var1.method1367() << 16);
@@ -35,7 +36,7 @@ public class class113 extends class757 {
 
    @deob.ObfuscatedName("aec.x(S)Ladz;")
    protected class109 method1472() {
-      return class109.method15110(class558.field4879, client.field2463.field832);
+      return class109.method15110(ClientProt.EVENT_NATIVE_MOUSE_MOVE, client.field2463.field832);
    }
 
    @deob.ObfuscatedName("aec.al(Laen;Laji;B)V")

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import net.ServerProt;
 
 @deob.ObfuscatedName("ae")
 public class class110 {
@@ -11,7 +12,7 @@ public class class110 {
    @deob.ObfuscatedName("ae.o")
    public class251 field835 = new class251(15000);
    @deob.ObfuscatedName("ae.x")
-   public class567 field826 = null;
+   public ServerProt field826 = null;
    @deob.ObfuscatedName("ae.s")
    public int field829 = 0;
    @deob.ObfuscatedName("ae.l")
@@ -33,11 +34,11 @@ public class class110 {
    @deob.ObfuscatedName("ae.z")
    public int field836;
    @deob.ObfuscatedName("ae.m")
-   public class567 field837;
+   public ServerProt field837;
    @deob.ObfuscatedName("ae.i")
-   public class567 field838;
+   public ServerProt field838;
    @deob.ObfuscatedName("ae.t")
-   public class567 field839;
+   public ServerProt field839;
    @deob.ObfuscatedName("ae.k")
    private class711 field821;
    @deob.ObfuscatedName("ae.a")
@@ -85,6 +86,10 @@ public class class110 {
    public final void method1408(class109 arg0) {
       this.field822.method14959(arg0);
       arg0.field816 = arg0.field814.field935;
+      if (ClientConfig.PACKET_LOGGING) {
+         System.out.println("[Outgoing] Packet " + arg0.field815.getName() + " ID " + arg0.field815.getOpcode() + " (size " + arg0.field816 + " bytes) sent");
+      }
+
       arg0.field814.field935 = 0;
       this.field825 += arg0.field816;
    }
@@ -127,3 +132,4 @@ public class class110 {
       return this.field821;
    }
 }
+

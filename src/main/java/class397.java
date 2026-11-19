@@ -1,3 +1,5 @@
+import net.ClientProt;
+
 @deob.ObfuscatedName("dl")
 public class class397 {
    @deob.ObfuscatedName("dl.n")
@@ -189,7 +191,7 @@ public class class397 {
          }
 
          method11737();
-         class109 var4 = class109.method15110(class558.field4783, client.field2463.field832);
+         class109 var4 = class109.method15110(ClientProt.CUTSCENE_FINISHED, client.field2463.field832);
          var4.field814.method1568(arg0 ? 1 : 0);
          client.field2463.method1408(var4);
       }

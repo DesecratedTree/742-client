@@ -1,5 +1,7 @@
 import java.util.Iterator;
 import java.util.List;
+import net.ClientProt;
+import net.ClientPacket;
 
 @deob.ObfuscatedName("z")
 public class class987 {
@@ -1937,7 +1939,7 @@ public class class987 {
             client.field2504 = arg2;
             client.field2517 = 2;
             client.field2539 = 0;
-            class109 var10 = class109.method15110(class558.field4887, client.field2463.field832);
+            class109 var10 = class109.method15110(ClientProt.OPPLAYERT, client.field2463.field832);
             var10.field814.method1718(client.field2622);
             var10.field814.method1738(method10952() ? 1 : 0);
             var10.field814.method1627(Statics.field5701.field12);
@@ -1954,7 +1956,7 @@ public class class987 {
                client.field2504 = arg2;
                client.field2517 = 2;
                client.field2539 = 0;
-               class109 var13 = class109.method15110(class558.field4787, client.field2463.field832);
+               class109 var13 = class109.method15110(ClientProt.OPNPCT, client.field2463.field832);
                var13.field814.method1738(method10952() ? 1 : 0);
                var13.field814.method1569(var6);
                var13.field814.method1572(Statics.field4335);
@@ -1970,7 +1972,7 @@ public class class987 {
             client.field2504 = arg2;
             client.field2517 = 1;
             client.field2539 = 0;
-            class109 var14 = class109.method15110(class558.field4880, client.field2463.field832);
+            class109 var14 = class109.method15110(ClientProt.APCOORDT, client.field2463.field832);
             var14.field814.method1569(client.field2622);
             var14.field814.method1569(client.field2589);
             var14.field814.method1627(var9.field6676 + var3);
@@ -1987,19 +1989,19 @@ public class class987 {
             }
          }
 
-         class558 var16 = null;
+         ClientPacket var16 = null;
          if (var5 == 18) {
-            var16 = class558.field4890;
+            var16 = ClientProt.OPOBJ1;
          } else if (var5 == 19) {
-            var16 = class558.field4863;
+            var16 = ClientProt.OPOBJ2;
          } else if (var5 == 20) {
-            var16 = class558.field4843;
+            var16 = ClientProt.OPOBJ3;
          } else if (var5 == 21) {
-            var16 = class558.field4823;
+            var16 = ClientProt.OPOBJ4;
          } else if (var5 == 22) {
-            var16 = class558.field4804;
+            var16 = ClientProt.OPOBJ5;
          } else if (var5 == 1004) {
-            var16 = class558.field4858;
+            var16 = ClientProt.OPOBJ6;
          }
 
          if (var16 != null) {
@@ -2016,19 +2018,19 @@ public class class987 {
             client.method15092(var3, var4);
          }
 
-         class558 var18 = null;
+         ClientPacket var18 = null;
          if (var5 == 3) {
-            var18 = class558.field4853;
+            var18 = ClientProt.OPLOC1;
          } else if (var5 == 4) {
-            var18 = class558.field4784;
+            var18 = ClientProt.OPLOC2;
          } else if (var5 == 5) {
-            var18 = class558.field4797;
+            var18 = ClientProt.OPLOC3;
          } else if (var5 == 6) {
-            var18 = class558.field4886;
+            var18 = ClientProt.OPLOC4;
          } else if (var5 == 1001) {
-            var18 = class558.field4833;
+            var18 = ClientProt.OPLOC5;
          } else if (var5 == 1002) {
-            var18 = class558.field4859;
+            var18 = ClientProt.OPLOC6;
          }
 
          if (var18 != null) {
@@ -2052,7 +2054,7 @@ public class class987 {
                client.field2504 = arg2;
                client.field2517 = 2;
                client.field2539 = 0;
-               class109 var21 = class109.method15110(class558.field4887, client.field2463.field832);
+               class109 var21 = class109.method15110(ClientProt.OPPLAYERT, client.field2463.field832);
                var21.field814.method1718(client.field2622);
                var21.field814.method1738(method10952() ? 1 : 0);
                var21.field814.method1627(var6);
@@ -2071,26 +2073,26 @@ public class class987 {
                client.field2504 = arg2;
                client.field2517 = 1;
                client.field2539 = 0;
-               class109 var22 = class109.method15110(class558.field4829, client.field2463.field832);
+               class109 var22 = class109.method15110(ClientProt.FACE_SQUARE, client.field2463.field832);
                var22.field814.method1627(var9.field6677 + var4);
                var22.field814.method1569(var9.field6676 + var3);
                client.field2463.method1408(var22);
             }
          }
 
-         class558 var23 = null;
+         ClientPacket var23 = null;
          if (var5 == 9) {
-            var23 = class558.field4802;
+            var23 = ClientProt.OPNPC1;
          } else if (var5 == 10) {
-            var23 = class558.field4835;
+            var23 = ClientProt.OPNPC2;
          } else if (var5 == 11) {
-            var23 = class558.field4824;
+            var23 = ClientProt.OPNPC3;
          } else if (var5 == 12) {
-            var23 = class558.field4822;
+            var23 = ClientProt.OPNPC4;
          } else if (var5 == 13) {
-            var23 = class558.field4813;
+            var23 = ClientProt.OPNPC5;
          } else if (var5 == 1003) {
-            var23 = class558.field4839;
+            var23 = ClientProt.OPNPC6;
          }
 
          if (var23 != null) {
@@ -2114,7 +2116,7 @@ public class class987 {
             client.field2504 = arg2;
             client.field2517 = 2;
             client.field2539 = 0;
-            class109 var27 = class109.method15110(class558.field4888, client.field2463.field832);
+            class109 var27 = class109.method15110(ClientProt.OPLOCT, client.field2463.field832);
             var27.field814.method1636(Statics.field4335);
             var27.field814.method1568(method10952() ? 1 : 0);
             var27.field814.method1750(var9.field6676 + var3);
@@ -2155,27 +2157,27 @@ public class class987 {
             }
          }
 
-         class558 var30 = null;
+         ClientPacket var30 = null;
          if (var5 == 44) {
-            var30 = class558.field4825;
+            var30 = ClientProt.OPPLAYER1;
          } else if (var5 == 45) {
-            var30 = class558.field4789;
+            var30 = ClientProt.OPPLAYER2;
          } else if (var5 == 46) {
-            var30 = class558.field4840;
+            var30 = ClientProt.OPPLAYER3;
          } else if (var5 == 47) {
-            var30 = class558.field4885;
+            var30 = ClientProt.OPPLAYER4;
          } else if (var5 == 48) {
-            var30 = class558.field4860;
+            var30 = ClientProt.OPPLAYER5;
          } else if (var5 == 49) {
-            var30 = class558.field4815;
+            var30 = ClientProt.OPPLAYER6;
          } else if (var5 == 50) {
-            var30 = class558.field4816;
+            var30 = ClientProt.OPPLAYER7;
          } else if (var5 == 51) {
-            var30 = class558.field4836;
+            var30 = ClientProt.OPPLAYER8;
          } else if (var5 == 52) {
-            var30 = class558.field4834;
+            var30 = ClientProt.OPPLAYER9;
          } else if (var5 == 53) {
-            var30 = class558.field4827;
+            var30 = ClientProt.OPPLAYER10;
          }
 
          if (var30 != null) {
@@ -2198,7 +2200,7 @@ public class class987 {
             client.field2504 = arg2;
             client.field2517 = 2;
             client.field2539 = 0;
-            class109 var33 = class109.method15110(class558.field4877, client.field2463.field832);
+            class109 var33 = class109.method15110(ClientProt.OPOBJT, client.field2463.field832);
             var33.field814.method1718(var6);
             var33.field814.method1627(client.field2589);
             var33.field814.method1750(var9.field6677 + var4);
@@ -2245,11 +2247,11 @@ public class class987 {
    private static class109 method6611(int arg0, int arg1, int arg2) {
       class109 var3 = null;
       if (arg2 == 0) {
-         var3 = class109.method15110(class558.field4855, client.field2463.field832);
+         var3 = class109.method15110(ClientProt.MOVE_GAMECLICK, client.field2463.field832);
       }
 
       if (arg2 == 1) {
-         var3 = class109.method15110(class558.field4821, client.field2463.field832);
+         var3 = class109.method15110(ClientProt.MOVE_MINIMAPCLICK, client.field2463.field832);
       }
 
       class723 var4 = client.field2468.method9649();

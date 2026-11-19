@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import net.ClientProt;
 
 @deob.ObfuscatedName("ao")
 public class class319 {
@@ -620,7 +621,7 @@ public class class319 {
 
             if (client.field2410 == 1 || client.field2410 == 15) {
                class110 var26 = Statics.method8951();
-               class109 var27 = class109.method15110(class558.field4849, var26.field832);
+               class109 var27 = class109.method15110(ClientProt.CLIENT_CHEAT, var26.field832);
                var27.field814.method1568(arg0.length() + 3);
                var27.field814.method1568(arg1 ? 1 : 0);
                var27.field814.method1568(arg2 ? 1 : 0);

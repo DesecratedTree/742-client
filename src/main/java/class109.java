@@ -1,3 +1,5 @@
+import net.ClientPacket;
+
 @deob.ObfuscatedName("adz")
 public class class109 extends class674 {
    @deob.ObfuscatedName("adz.a")
@@ -11,7 +13,7 @@ public class class109 extends class674 {
    @deob.ObfuscatedName("adz.o")
    public class251 field814;
    @deob.ObfuscatedName("adz.b")
-   public class558 field815;
+   public ClientPacket field815;
 
    private class109() {
    }
@@ -22,10 +24,10 @@ public class class109 extends class674 {
    }
 
    @deob.ObfuscatedName("uf.k(Ljc;Lut;I)Ladz;")
-   public static class109 method15110(class558 arg0, class872 arg1) {
+   public static class109 method15110(ClientPacket arg0, class872 arg1) {
       class109 var2 = method11180();
       var2.field815 = arg0;
-      var2.field813 = arg0.field4869;
+      var2.field813 = arg0.size;
       if (var2.field813 == -1) {
          var2.field814 = new class251(260);
       } else if (var2.field813 == -2) {
@@ -39,7 +41,7 @@ public class class109 extends class674 {
       }
 
       var2.field814.method3384(arg1);
-      var2.field814.method3385(var2.field815.field4889);
+      var2.field814.method3385(var2.field815.getOpcode());
       var2.field816 = 0;
       return var2;
    }

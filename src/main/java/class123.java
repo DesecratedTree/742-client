@@ -1,3 +1,5 @@
+import net.ClientProt;
+
 @deob.ObfuscatedName("aem")
 public class class123 extends class757 {
    @deob.ObfuscatedName("aem.o(I)V")
@@ -24,7 +26,7 @@ public class class123 extends class757 {
             var5 = 1;
          }
 
-         class109 var6 = class109.method15110(class558.field4871, client.field2463.field832);
+         class109 var6 = class109.method15110(ClientProt.EVENT_MOUSE_CLICK, client.field2463.field832);
          var6.field814.method1569(var2 | var5 << 15);
          var6.field814.method1572(var4 | var3 << 16);
          client.field2463.method1408(var6);
@@ -44,7 +46,7 @@ public class class123 extends class757 {
 
    @deob.ObfuscatedName("aem.x(S)Ladz;")
    protected class109 method1472() {
-      return class109.method15110(class558.field4848, client.field2463.field832);
+      return class109.method15110(ClientProt.EVENT_MOUSE_MOVE, client.field2463.field832);
    }
 
    @deob.ObfuscatedName("aem.p(Laen;Lads;I)V")

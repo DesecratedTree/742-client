@@ -1,6 +1,7 @@
 import java.awt.Point;
 import java.io.File;
 import java.util.ArrayList;
+import net.ClientProt;
 
 @deob.ObfuscatedName("rl")
 public final class class783 {
@@ -396,7 +397,7 @@ public final class class783 {
    public static void method663(String arg0, String arg1, String arg2, boolean arg3, boolean arg4) {
       class110 var5 = Statics.method8951();
       if (var5.method1413() != null) {
-         class109 var6 = class109.method15110(class558.field4792, var5.field832);
+         class109 var6 = class109.method15110(ClientProt.URL_REQUEST, var5.field832);
          var6.field814.method1569(class124.method1229(arg0) + class124.method1229(arg1) + class124.method1229(arg2) + 1);
          var6.field814.method1577(arg0);
          var6.field814.method1577(arg1);
@@ -7501,7 +7502,7 @@ public final class class783 {
          var2 = class816.method5626(var1);
       }
 
-      class109 var3 = class109.method15110(class558.field4846, client.field2463.field832);
+      class109 var3 = class109.method15110(ClientProt.RESUME_P_COUNTDIALOG, client.field2463.field832);
       var3.field814.method1572(var2);
       client.field2463.method1408(var3);
    }
@@ -7509,7 +7510,7 @@ public final class class783 {
    @deob.ObfuscatedName("qy.sj(Lrs;S)V")
    private static final void method11456(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
-      class109 var2 = class109.method15110(class558.field4817, client.field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_P_NAMEDIALOG, client.field2463.field832);
       var2.field814.method1568(var1.length() + 1);
       var2.field814.method1577(var1);
       client.field2463.method1408(var2);
@@ -7518,7 +7519,7 @@ public final class class783 {
    @deob.ObfuscatedName("ot.so(Lrs;B)V")
    private static final void method10461(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
-      class109 var2 = class109.method15110(class558.field4866, client.field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_P_STRINGDIALOG, client.field2463.field832);
       var2.field814.method1568(var1.length() + 1);
       var2.field814.method1577(var1);
       client.field2463.method1408(var2);
@@ -7553,7 +7554,7 @@ public final class class783 {
    @deob.ObfuscatedName("ms.sx(Lrs;I)V")
    private static final void method9458(class790 arg0) {
       int var1 = arg0.field7203[--arg0.field7204];
-      class109 var2 = class109.method15110(class558.field4801, client.field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_P_OBJDIALOG, client.field2463.field832);
       var2.field814.method1569(var1);
       client.field2463.method1408(var2);
    }
@@ -7598,7 +7599,7 @@ public final class class783 {
    @deob.ObfuscatedName("pm.te(Lrs;S)V")
    private static final void method10791(class790 arg0) {
       int var1 = arg0.field7203[--arg0.field7204];
-      class109 var2 = class109.method15110(class558.field4786, client.field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_P_HSLDIALOG, client.field2463.field832);
       var2.field814.method1569(var1);
       client.field2463.method1408(var2);
    }
@@ -7606,7 +7607,7 @@ public final class class783 {
    @deob.ObfuscatedName("abt.tt(Lrs;B)V")
    private static final void method741(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
-      class109 var2 = class109.method15110(class558.field4856, client.field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_P_CLANFORUMQFCDIALOG, client.field2463.field832);
       var2.field814.method1568(var1.length() + 1);
       var2.field814.method1577(var1);
       client.field2463.method1408(var2);
@@ -8135,7 +8136,7 @@ public final class class783 {
    @deob.ObfuscatedName("iz.vo(Lrs;B)V")
    private static final void method7457(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
-      class109 var2 = class109.method15110(class558.field4882, client.field2462.field832);
+      class109 var2 = class109.method15110(ClientProt.SEND_EMAIL_VALIDATION_CODE, client.field2462.field832);
       var2.field814.method1568(class124.method1229(var1));
       var2.field814.method1577(var1);
       client.field2462.method1408(var2);
@@ -8145,7 +8146,7 @@ public final class class783 {
    private static final void method4215(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
       String var2 = (String)arg0.field7226[--arg0.field7205];
-      class109 var3 = class109.method15110(class558.field4883, client.field2462.field832);
+      class109 var3 = class109.method15110(ClientProt.CHANGE_EMAIL_ADDRESS, client.field2462.field832);
       var3.field814.method1569(class124.method1229(var1) + class124.method1229(var2));
       var3.field814.method1577(var1);
       var3.field814.method1577(var2);
@@ -8160,7 +8161,7 @@ public final class class783 {
       boolean var2 = arg0.field7203[arg0.field7204] == 1;
       boolean var3 = arg0.field7203[arg0.field7204 + 1] == 1;
       boolean var4 = arg0.field7203[arg0.field7204 + 2] == 1;
-      class109 var5 = class109.method15110(class558.field4810, client.field2462.field832);
+      class109 var5 = class109.method15110(ClientProt.ADD_NEW_EMAIL_ADDRESS, client.field2462.field832);
       var5.field814.method1569(class124.method1229(var1) + 1);
       var5.field814.method1577(var1);
       int var6 = 0;
@@ -9369,7 +9370,7 @@ public final class class783 {
 
       client.field2411 = arg0.field7203[arg0.field7204 + 2];
       class110 var1 = Statics.method8951();
-      class109 var2 = class109.method15110(class558.field4781, var1.field832);
+      class109 var2 = class109.method15110(ClientProt.SET_CHATFILTERSETTINGS, var1.field832);
       var2.field814.method1568(client.field2582);
       var2.field814.method1568(Statics.field8784.field8819);
       var2.field814.method1568(client.field2411);
@@ -9393,7 +9394,7 @@ public final class class783 {
       }
 
       class110 var5 = Statics.method8951();
-      class109 var6 = class109.method15110(class558.field4832, var5.field832);
+      class109 var6 = class109.method15110(ClientProt.SEND_SNAPSHOT, var5.field832);
       var6.field814.method1568(class124.method1229(var1) + 2 + class124.method1229(var2));
       var6.field814.method1577(var1);
       var6.field814.method1568(var3 - 1);
@@ -9440,7 +9441,7 @@ public final class class783 {
    private static final void method6572(class790 arg0) {
       int var1 = arg0.field7203[--arg0.field7204];
       class110 var2 = Statics.method8951();
-      class109 var3 = class109.method15110(class558.field4851, var2.field832);
+      class109 var3 = class109.method15110(ClientProt.CHAT_SET_MODE, var2.field832);
       var3.field814.method1568(var1);
       var2.method1408(var3);
    }
@@ -9564,7 +9565,7 @@ public final class class783 {
          }
 
          class110 var6 = Statics.method8951();
-         class109 var7 = class109.method15110(class558.field4867, var6.field832);
+         class109 var7 = class109.method15110(ClientProt.MESSAGE_PUBLIC, var6.field832);
          var7.field814.method1568(0);
          int var8 = var7.field814.field935;
          var7.field814.method1568(var3);
@@ -9582,7 +9583,7 @@ public final class class783 {
       String var2 = (String)arg0.field7226[arg0.field7205 + 1];
       if (client.field2562 != 0 || (!client.field2635 || client.field2680) && !client.field2569) {
          class110 var3 = Statics.method8951();
-         class109 var4 = class109.method15110(class558.field4830, var3.field832);
+         class109 var4 = class109.method15110(ClientProt.MESSAGE_PRIVATE, var3.field832);
          var4.field814.method1569(0);
          int var5 = var4.field814.field935;
          var4.field814.method1577(var1);
@@ -9773,7 +9774,7 @@ public final class class783 {
    @deob.ObfuscatedName("ai.adm(Lrs;I)V")
    private static final void method2950(class790 arg0) {
       class110 var1 = Statics.method8951();
-      class109 var2 = class109.method15110(class558.field4868, var1.field832);
+      class109 var2 = class109.method15110(ClientProt.MESSAGE_QUICKCHAT_PUBLIC, var1.field832);
       var2.field814.method1568(0);
       int var3 = var2.field814.field935;
       var2.field814.method1568(0);
@@ -9787,7 +9788,7 @@ public final class class783 {
    private static final void method11164(class790 arg0) {
       String var1 = (String)arg0.field7226[--arg0.field7205];
       class110 var2 = Statics.method8951();
-      class109 var3 = class109.method15110(class558.field4838, var2.field832);
+      class109 var3 = class109.method15110(ClientProt.MESSAGE_QUICKCHAT_PRIVATE, var2.field832);
       var3.field814.method1568(0);
       int var4 = var3.field814.field935;
       var3.field814.method1577(var1);
@@ -9800,7 +9801,7 @@ public final class class783 {
    @deob.ObfuscatedName("aac.adf(Lrs;I)V")
    private static final void method210(class790 arg0) {
       class110 var1 = Statics.method8951();
-      class109 var2 = class109.method15110(class558.field4868, var1.field832);
+      class109 var2 = class109.method15110(ClientProt.MESSAGE_QUICKCHAT_PUBLIC, var1.field832);
       var2.field814.method1568(0);
       int var3 = var2.field814.field935;
       var2.field814.method1568(1);
@@ -9907,7 +9908,7 @@ public final class class783 {
    @deob.ObfuscatedName("lc.adp(Lrs;I)V")
    private static final void method8870(class790 arg0) {
       class110 var1 = Statics.method8951();
-      class109 var2 = class109.method15110(class558.field4868, var1.field832);
+      class109 var2 = class109.method15110(ClientProt.MESSAGE_QUICKCHAT_PUBLIC, var1.field832);
       var2.field814.method1568(0);
       int var3 = var2.field814.field935;
       var2.field814.method1568(2);
@@ -9920,7 +9921,7 @@ public final class class783 {
    @deob.ObfuscatedName("air.adh(Lrs;I)V")
    private static final void method3316(class790 arg0) {
       class110 var1 = Statics.method8951();
-      class109 var2 = class109.method15110(class558.field4868, var1.field832);
+      class109 var2 = class109.method15110(ClientProt.MESSAGE_QUICKCHAT_PUBLIC, var1.field832);
       var2.field814.method1568(0);
       int var3 = var2.field814.field935;
       var2.field814.method1568(3);
@@ -11870,7 +11871,7 @@ public final class class783 {
             arg0.field7203[++arg0.field7204 - 1] = 1;
          } else {
             class861.field8793 = true;
-            class109 var1 = class109.method15110(class558.field4794, client.field2462.field832);
+            class109 var1 = class109.method15110(ClientProt.WORLDLIST_FETCH, client.field2462.field832);
             var1.field814.method1572(Statics.field6956);
             client.field2462.method1408(var1);
             arg0.field7203[++arg0.field7204 - 1] = 0;
@@ -12928,7 +12929,7 @@ public final class class783 {
    @deob.ObfuscatedName("sr.arb(ILjava/lang/String;Ljava/lang/String;B)V")
    private static void method14446(int arg0, String arg1, String arg2) {
       if (client.field2463 != null) {
-         class109 var3 = class109.method15110(class558.field4878, client.field2463.field832);
+         class109 var3 = class109.method15110(ClientProt.BUG_REPORT, client.field2463.field832);
          var3.field814.method1569(1 + class124.method14353(arg1) + class124.method14353(arg2));
          var3.field814.method1578(arg2);
          var3.field814.method1772(arg0);

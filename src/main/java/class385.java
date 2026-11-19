@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.net.URL;
+import net.ServerProt;
 
 @deob.ObfuscatedName("d")
 public class class385 {
@@ -893,7 +894,7 @@ public class class385 {
                   Statics.field2790.method1413().method1541(var36.field931, 3, 1);
                }
 
-               Statics.field2790.field826 = class567.method2125()[var36.method3403()];
+               Statics.field2790.field826 = ServerProt.values()[var36.method3403()];
                Statics.field2790.field829 = var36.method1587();
                field2820 = 154;
             }
@@ -914,7 +915,7 @@ public class class385 {
                class251 var39 = new class251(var38);
                System.arraycopy(Statics.field2790.field835.field931, Statics.field2790.field835.field935, var39.field931, 0, var38);
                Statics.field2790.field835.field935 += var38;
-               if (class567.field5002 == Statics.field2790.field826) {
+               if (ServerProt.REBUILD_REGION == Statics.field2790.field826) {
                   client.field2468.method9537(new class650(class657.field5991, var39));
                } else {
                   client.field2468.method9537(new class650(class657.field5990, var39));
@@ -1257,3 +1258,4 @@ public class class385 {
       }
    }
 }
+

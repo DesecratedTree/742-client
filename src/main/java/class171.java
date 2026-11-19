@@ -1,8 +1,10 @@
+import net.ClientProt;
+
 @deob.ObfuscatedName("agg")
 public class class171 extends class927 implements class829 {
    @deob.ObfuscatedName("agg.n(I)V")
    public void method2332() {
-      class109 var1 = class109.method15110(class558.field4870, client.field2463.field832);
+      class109 var1 = class109.method15110(ClientProt.AUTO_SETUP_RESULT, client.field2463.field832);
       var1.field814.method1772(this.field9403);
       var1.field814.method1571(this.field9402);
       var1.field814.method1571(this.field9416);

@@ -20,6 +20,9 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.TimeZone;
 import java.util.Vector;
+import net.ClientProt;
+import net.ClientPacket;
+import net.ServerProt;
 
 @deob.ObfuscatedName("client")
 public final class client extends class671 {
@@ -2208,7 +2211,7 @@ public final class client extends class671 {
 
    @deob.ObfuscatedName("vm.ep(I)V")
    public static void method15555() {
-      class109 var0 = class109.method15110(class558.field4812, field2463.field832);
+      class109 var0 = class109.method15110(ClientProt.WINDOW_STATUS, field2463.field832);
       var0.field814.method1568(method10038());
       var0.field814.method1569(Statics.field6104);
       var0.field814.method1569(Statics.field6354);
@@ -2853,7 +2856,7 @@ public final class client extends class671 {
                                     if (field2462 != null) {
                                        ++field2462.field820;
                                        if (field2462.field820 > 50) {
-                                          class109 var24 = class109.method15110(class558.field4876, field2462.field832);
+                                          class109 var24 = class109.method15110(ClientProt.NO_TIMEOUT, field2462.field832);
                                           field2462.method1408(var24);
                                        }
 
@@ -2928,7 +2931,7 @@ public final class client extends class671 {
 
          if (field2410 == 1) {
             while(class896.method10959()) {
-               class109 var1 = class109.method15110(class558.field4806, field2463.field832);
+               class109 var1 = class109.method15110(ClientProt.REFLECTION_CHECK_REPLY, field2463.field832);
                var1.field814.method1568(0);
                int var2 = var1.field814.field935;
                class896.method9947(var1.field814);
@@ -2938,7 +2941,7 @@ public final class client extends class671 {
 
             if (Statics.field207 != null) {
                if (Statics.field207.field7185 != -1) {
-                  class109 var3 = class109.method15110(class558.field4874, field2463.field832);
+                  class109 var3 = class109.method15110(ClientProt.PING_STATISTICS, field2463.field832);
                   if (Statics.field9429 == null || !Statics.field9429.isValid()) {
                      try {
                         Iterator var4 = ManagementFactory.getGarbageCollectorMXBeans().iterator();
@@ -3131,7 +3134,7 @@ public final class client extends class671 {
                   method14629();
                   ++field2447;
                   if (field2685) {
-                     class109 var26 = class109.method15110(class558.field4847, field2463.field832);
+                     class109 var26 = class109.method15110(ClientProt.CLICK_WORLDMAP, field2463.field832);
                      var26.field814.method1635(Statics.field9242 << 28 | Statics.field5611 << 14 | Statics.field3085);
                      field2463.method1408(var26);
                      field2685 = false;
@@ -3273,7 +3276,7 @@ public final class client extends class671 {
 
                                              ++field2463.field820;
                                              if (field2463.field820 > 50) {
-                                                class109 var42 = class109.method15110(class558.field4876, field2463.field832);
+                                                class109 var42 = class109.method15110(ClientProt.NO_TIMEOUT, field2463.field832);
                                                 field2463.method1408(var42);
                                              }
 
@@ -7062,7 +7065,7 @@ public final class client extends class671 {
          }
       } catch (Exception var7) {
          class723 var3 = field2468.method9649();
-         String var4 = (arg0.field826 != null ? arg0.field826.field5125 : -1) + class582.field5306 + (arg0.field838 != null ? arg0.field838.field5125 : -1) + class582.field5306 + (arg0.field839 != null ? arg0.field839.field5125 : -1) + " " + arg0.field829 + class582.field5306 + (var3.field6676 + Statics.field5701.field16[0]) + class582.field5306 + (var3.field6677 + Statics.field5701.field62[0]) + " ";
+         String var4 = (arg0.field826 != null ? arg0.field826.getOpcode() : -1) + class582.field5306 + (arg0.field838 != null ? arg0.field838.getOpcode() : -1) + class582.field5306 + (arg0.field839 != null ? arg0.field839.getOpcode() : -1) + " " + arg0.field829 + class582.field5306 + (var3.field6676 + Statics.field5701.field16[0]) + class582.field5306 + (var3.field6677 + Statics.field5701.field62[0]) + " ";
 
          for(int var5 = 0; var5 < arg0.field829 && var5 < 50; ++var5) {
             var4 = var4 + arg0.field835.field931[var5] + class582.field5306;
@@ -7105,14 +7108,14 @@ public final class client extends class671 {
             }
 
             arg0.field830 = true;
-            class567[] var3 = class567.method2125();
+            ServerProt[] var3 = ServerProt.values();
             int var4 = var2.method3403();
             if (var4 < 0 || var4 >= var3.length) {
                throw new IOException(var4 + " " + var2.field935);
             }
 
             arg0.field826 = var3[var4];
-            arg0.field829 = arg0.field826.field5126;
+            arg0.field829 = arg0.field826.size;
          }
 
          if (arg0.field829 == -1) {
@@ -7149,22 +7152,26 @@ public final class client extends class671 {
             arg0.field831 = 0;
          }
 
+         if (ClientConfig.PACKET_LOGGING) {
+            System.out.println("[Incoming] Packet " + arg0.field826.getName() + " ID " + arg0.field826.getOpcode() + " (size " + arg0.field829 + " bytes)");
+         }
+
          arg0.field839 = arg0.field838;
          arg0.field838 = arg0.field837;
          arg0.field837 = arg0.field826;
-         if (class567.field4996 == arg0.field826) {
+         if (ServerProt.IF_SETMODEL == arg0.field826) {
             int var5 = var2.method1611();
             int var6 = var2.method1611();
             method6863();
             class231.method15040(var6, 1, var5, -1);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5078 == arg0.field826) {
+         } else if (ServerProt.DO_CHEAT == arg0.field826) {
             String var7 = var2.method1599();
             class319.method8552(var7, false, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5079 == arg0.field826) {
+         } else if (ServerProt.MIDI_SONG_LOCATION == arg0.field826) {
             int var8 = var2.method1619();
             int var9 = var2.method1639();
             int var10 = var2.method1778();
@@ -7176,14 +7183,14 @@ public final class client extends class671 {
             class677.method2952(var13, var14, var15, var8, var11, var12, var10);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5017 == arg0.field826) {
+         } else if (ServerProt.VARCSTR_LARGE == arg0.field826) {
             int var16 = var2.method1628();
             String var17 = var2.method1599();
             method6863();
             class231.method9268(var16, var17);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5122 == arg0.field826) {
+         } else if (ServerProt.CAM_LOOKAT == arg0.field826) {
             int var18 = var2.method1628() << 2;
             int var19 = var2.method1688();
             int var20 = var2.method1579();
@@ -7193,7 +7200,7 @@ public final class client extends class671 {
             method14327(var19, var22, var18, var21, var20);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5042 == arg0.field826) {
+         } else if (ServerProt.UPDATE_UID192 == arg0.field826) {
             var2.field935 += 28;
             if (var2.method1615()) {
                class671.method7972(var2, var2.field935 - 28);
@@ -7201,14 +7208,14 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5069 == arg0.field826) {
+         } else if (ServerProt.IF_SETTEXT == arg0.field826) {
             int var23 = var2.method1591();
             String var24 = var2.method1599();
             method6863();
             class231.method3314(var23, var24);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5076 == arg0.field826) {
+         } else if (ServerProt.CREATE_CHECK_NAME == arg0.field826) {
             field2703 = var2.method1594();
             if (field2703 == 0 || field2703 == 1) {
                field2567 = true;
@@ -7216,7 +7223,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5048 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_FRIENDCHAT == arg0.field826) {
             boolean var25 = var2.method1688() == 1;
             String var26 = var2.method1599();
             String var27 = var26;
@@ -7271,17 +7278,17 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5091 == arg0.field826) {
+         } else if (ServerProt.IF_SETPLAYERMODEL == arg0.field826) {
             int var40 = var2.method1611();
             method6863();
             class231.method15040(var40, 5, field2452, 0);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5038 == arg0.field826) {
+         } else if (ServerProt.CHAT_FILTER_SETTINGS_PRIVATECHAT == arg0.field826) {
             Statics.field8784 = class868.method16038(var2.method1688());
             arg0.field826 = null;
             return true;
-         } else if (class567.field5062 == arg0.field826) {
+         } else if (ServerProt.VORBIS_SOUND == arg0.field826) {
             int var41 = var2.method1587();
             if (var41 == 65535) {
                var41 = -1;
@@ -7294,7 +7301,7 @@ public final class client extends class671 {
             class677.method6230(var41, var42, var43, var44, false, var45);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5053 == arg0.field826) {
+         } else if (ServerProt.CAM_SHAKE == arg0.field826) {
             int var46 = var2.method1619();
             int var47 = var2.method1579();
             int var48 = var2.method1579();
@@ -7308,11 +7315,11 @@ public final class client extends class671 {
             field2510[var50] = var49;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5103 == arg0.field826) {
+         } else if (ServerProt.MAP_PROJANIM_HALFSQ == arg0.field826) {
             method14681(class530.field4178);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5085 == arg0.field826) {
+         } else if (ServerProt.CLANCHANNEL_FULL == arg0.field826) {
             field2639 = field2447;
             boolean var51 = var2.method1688() == 1;
             if (arg0.field829 == 1) {
@@ -7334,7 +7341,7 @@ public final class client extends class671 {
                arg0.field826 = null;
                return true;
             }
-         } else if (class567.field5116 == arg0.field826) {
+         } else if (ServerProt.IF_OPENSUB_ACTIVE_OBJ == arg0.field826) {
             int var52 = var2.method1587();
             class723 var53 = new class723(var2.method1640());
             int var54 = var2.method1639();
@@ -7348,21 +7355,21 @@ public final class client extends class671 {
             method14630(var59, new class262(var52, var55, new class773(var53, var60)), new int[]{var54, var57, var56, var58}, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4983 == arg0.field826) {
+         } else if (ServerProt.LOGOUT_FULL == arg0.field826) {
             method5519(false);
             arg0.field826 = null;
             return false;
-         } else if (class567.field5107 == arg0.field826) {
+         } else if (ServerProt.EXECUTE_CLIENT_CHEAT == arg0.field826) {
             int var61 = var2.method1587();
             class319.method11576(var61);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5031 == arg0.field826) {
+         } else if (ServerProt.UPDATE_RUN_ENERGY == arg0.field826) {
             field2597 = var2.method1688();
             field2641 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5019 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_PUBLIC == arg0.field826) {
             int var62 = var2.method1587();
             class211 var63;
             if (field2452 == var62) {
@@ -7421,14 +7428,14 @@ public final class client extends class671 {
                arg0.field826 = null;
                return true;
             }
-         } else if (class567.field4979 == arg0.field826) {
+         } else if (ServerProt.IF_SETANIM == arg0.field826) {
             int var72 = var2.method1611();
             int var73 = var2.method1591();
             method6863();
             class231.method7354(var72, var73);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5061 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_SMALL == arg0.field826) {
             int var74 = var2.method1587();
             byte var75 = var2.method1623();
             if (Statics.field3804 == null) {
@@ -7439,13 +7446,13 @@ public final class client extends class671 {
             field2633[++field2634 - 1 & 31] = var74;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4962 == arg0.field826) {
+         } else if (ServerProt.VARP_BIT_LARGE == arg0.field826) {
             int var76 = var2.method1591();
             int var77 = var2.method1780();
             Statics.field10637.method6146(var77, var76);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5105 == arg0.field826) {
+         } else if (ServerProt.CUTSCENE == arg0.field826) {
             int var78 = var2.method1587();
             field2630 = -1;
             field2475 = var78;
@@ -7468,18 +7475,18 @@ public final class client extends class671 {
             var2.field935 += var82;
             arg0.field826 = null;
             return false;
-         } else if (class567.field5096 == arg0.field826) {
+         } else if (ServerProt.NPC_INFO_LARGE == arg0.field826) {
             method5211(true);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4976 == arg0.field826) {
+         } else if (ServerProt.IF_SETGRAPHIC == arg0.field826) {
             int var83 = var2.method1639();
             int var84 = var2.method1591();
             method6863();
             class231.method10920(var84, var83);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5113 == arg0.field826) {
+         } else if (ServerProt.SET_PLAYER_OP == arg0.field826) {
             int var85 = var2.method1628();
             if (var85 == 65535) {
                var85 = -1;
@@ -7500,14 +7507,14 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4987 == arg0.field826) {
+         } else if (ServerProt.IF_SETTEXTFONT == arg0.field826) {
             int var89 = var2.method1611();
             int var90 = var2.method1639();
             method6863();
             class231.method14504(var90, var89);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5055 == arg0.field826) {
+         } else if (ServerProt.CLANCHANNEL_DELTA == arg0.field826) {
             field2639 = field2447;
             boolean var91 = var2.method1688() == 1;
             class490 var92 = new class490(var2);
@@ -7521,21 +7528,21 @@ public final class client extends class671 {
             var92.method6893(var93);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5018 == arg0.field826) {
+         } else if (ServerProt.CAM_FORCEANGLE == arg0.field826) {
             int var94 = var2.method1629();
             int var95 = var2.method1587();
             method6863();
             method8975(var94, var95, 0);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5097 == arg0.field826) {
+         } else if (ServerProt.IF_SETCLICKMASK == arg0.field826) {
             boolean var96 = var2.method1778() == 1;
             int var97 = var2.method1639();
             method6863();
             class231.method15144(var97, var96);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5009 == arg0.field826) {
+         } else if (ServerProt.IF_OPENSUB == arg0.field826) {
             int var98 = var2.method1591();
             int var99 = var2.method1640();
             int var100 = var2.method1639();
@@ -7547,7 +7554,7 @@ public final class client extends class671 {
             method14630(var100, new class118(var102, var101), new int[]{var98, var99, var104, var103}, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5080 == arg0.field826) {
+         } else if (ServerProt.IF_OPENTOP == arg0.field826) {
             int var105 = var2.method1688();
             int var106 = var2.method1611();
             int var107 = var2.method1628();
@@ -7571,17 +7578,17 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5035 == arg0.field826) {
+         } else if (ServerProt.SETDRAWORDER == arg0.field826) {
             int var113 = var2.method1579();
             method6863();
             field2535 = var113;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5003 == arg0.field826) {
+         } else if (ServerProt.OBJ_COUNT == arg0.field826) {
             method14681(class530.field4185);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5092 == arg0.field826) {
+         } else if (ServerProt.HINT_TRAIL == arg0.field826) {
             int var114 = var2.method1688();
             int var115 = var2.method1608();
             if (field2424[var114] != null) {
@@ -7596,7 +7603,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5039 == arg0.field826) {
+         } else if (ServerProt.NPC_ANIM_SPECIFIC == arg0.field826) {
             int[] var116 = new int[class647.method15598().length];
 
             for(int var117 = 0; var117 < class647.method15598().length; ++var117) {
@@ -7612,7 +7619,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4963 == arg0.field826) {
+         } else if (ServerProt.CLANSETTINGS_FULL == arg0.field826) {
             field2638 = field2447;
             boolean var121 = var2.method1688() == 1;
             if (arg0.field829 == 1) {
@@ -7634,11 +7641,11 @@ public final class client extends class671 {
                arg0.field826 = null;
                return true;
             }
-         } else if (class567.field4999 == arg0.field826) {
+         } else if (ServerProt.LOC_DEL == arg0.field826) {
             method14681(class530.field4172);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5110 == arg0.field826) {
+         } else if (ServerProt.IF_SETPLAYERMODEL_OTHER == arg0.field826) {
             int var122 = var2.method1611();
             int var123 = var2.method1587();
             int var124 = var2.method1611();
@@ -7646,7 +7653,7 @@ public final class client extends class671 {
             class231.method15040(var124, 5, var123, var122);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5070 == arg0.field826) {
+         } else if (ServerProt.LOGOUT_TRANSFER == arg0.field826) {
             int var125 = var2.method1587();
             String var126 = var2.method1599();
             boolean var127 = var2.method1688() == 1;
@@ -7657,12 +7664,12 @@ public final class client extends class671 {
             method14844(0);
             arg0.field826 = null;
             return false;
-         } else if (class567.field5008 == arg0.field826) {
+         } else if (ServerProt.CHAT_FILTER_SETTINGS == arg0.field826) {
             field2411 = var2.method1579();
             field2582 = var2.method1579();
             arg0.field826 = null;
             return true;
-         } else if (class567.field4985 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_STR == arg0.field826) {
             int var129 = var2.method1587();
             String var130 = var2.method1599();
             if (Statics.field3804 == null) {
@@ -7673,7 +7680,7 @@ public final class client extends class671 {
             field2633[++field2634 - 1 & 31] = var129;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4966 == arg0.field826) {
+         } else if (ServerProt.UPDATE_STAT == arg0.field826) {
             int var131 = var2.method1619();
             int var132 = var2.method1579();
             int var133 = var2.method1639();
@@ -7691,7 +7698,7 @@ public final class client extends class671 {
             field2449[++field2628 - 1 & 31] = var131;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5043 == arg0.field826) {
+         } else if (ServerProt.JCOINS_UPDATE == arg0.field826) {
             int var136 = var2.method1639();
             if (Statics.field4780 != var136) {
                Statics.field4780 = var136;
@@ -7700,7 +7707,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5021 == arg0.field826) {
+         } else if (ServerProt.SOCIAL_NETWORK_LOGOUT == arg0.field826) {
             if (class854.field8745 && Statics.field688 != null) {
                method10176(Statics.field9361.field967.method2066(), -1, -1, false);
             }
@@ -7715,7 +7722,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5057 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_LARGE == arg0.field826) {
             int var140 = var2.method1587();
             int var141 = var2.method1591();
             if (Statics.field3804 == null) {
@@ -7726,7 +7733,7 @@ public final class client extends class671 {
             field2633[++field2634 - 1 & 31] = var140;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5071 == arg0.field826) {
+         } else if (ServerProt.UPDATE_INV_FULL == arg0.field826) {
             int var142 = var2.method1587();
             int var143 = var2.method1688();
             boolean var144 = (var143 & 1) == 1;
@@ -7746,12 +7753,12 @@ public final class client extends class671 {
             field2625[++field2560 - 1 & 31] = var142;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4980 == arg0.field826) {
+         } else if (ServerProt.FRIENDLIST_LOADED == arg0.field826) {
             field2695 = 1;
             field2524 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4991 == arg0.field826) {
+         } else if (ServerProt.RUN_CLIENT_SCRIPT == arg0.field826) {
             String var149 = var2.method1599();
             Object[] var150 = new Object[var149.length() + 1];
 
@@ -7770,7 +7777,7 @@ public final class client extends class671 {
             class783.method15429(var152);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5059 == arg0.field826) {
+         } else if (ServerProt.IF_MOVESUB == arg0.field826) {
             int var153 = var2.method1611();
             int var154 = var2.method1611();
             method6863();
@@ -7802,7 +7809,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5010 == arg0.field826) {
+         } else if (ServerProt.SET_MOVEACTION == arg0.field826) {
             Statics.field5177 = arg0.field829 > 2 ? var2.method1599() : class881.field9013.method15374(Statics.field243);
             field2575 = arg0.field829 > 0 ? var2.method1587() : -1;
             if (field2575 == 65535) {
@@ -7811,7 +7818,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5117 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_QUICKCHAT_CLANCHANNEL == arg0.field826) {
             boolean var159 = var2.method1688() == 1;
             String var160 = var2.method1599();
             long var161 = (long)var2.method1587();
@@ -7862,7 +7869,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5081 == arg0.field826) {
+         } else if (ServerProt.MIDI_JINGLE == arg0.field826) {
             int var175 = var2.method1579();
             int var176 = var2.method1780();
             if (var176 == 65535) {
@@ -7873,7 +7880,7 @@ public final class client extends class671 {
             class677.method5390(var176, var177, var175);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5099 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_80 == arg0.field826) {
             boolean var178 = var2.method1688() == 1;
             String var179 = var2.method1599();
             String var180 = var179;
@@ -7906,7 +7913,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5060 == arg0.field826) {
+         } else if (ServerProt.UPDATE_IGNORE_LIST == arg0.field826) {
             while(var2.field935 < arg0.field829) {
                int var184 = var2.method1688();
                boolean var185 = (var184 & 1) == 1;
@@ -7943,17 +7950,17 @@ public final class client extends class671 {
             field2524 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5066 == arg0.field826) {
+         } else if (ServerProt.VIDEO_MUTE == arg0.field826) {
             int var191 = var2.method1629();
             method6863();
             class817.method5482(var191);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4998 == arg0.field826) {
+         } else if (ServerProt.TEXT_COORD == arg0.field826) {
             method14681(class530.field4182);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5004 == arg0.field826) {
+         } else if (ServerProt.IF_SETOBJECT == arg0.field826) {
             int var192 = var2.method1591();
             int var193 = var2.method1628();
             if (var193 == 65535) {
@@ -7968,7 +7975,7 @@ public final class client extends class671 {
             class231.method14522(var194, var195.field9131, var195.field9150, var195.field9140);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5101 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_139 == arg0.field826) {
             boolean var196 = var2.method1688() == 1;
             String var197 = var2.method1599();
             String var198 = var197;
@@ -7996,11 +8003,11 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5040 == arg0.field826) {
+         } else if (ServerProt.LOGOUT == arg0.field826) {
             method5519(class385.field2835);
             arg0.field826 = null;
             return false;
-         } else if (class567.field5056 == arg0.field826) {
+         } else if (ServerProt.IF_SETRECOL == arg0.field826) {
             int var203 = var2.method1628();
             int var204 = var2.method1591();
             int var205 = var2.method1688();
@@ -8009,11 +8016,11 @@ public final class client extends class671 {
             class231.method1133(var204, var205, var206, var203);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4973 == arg0.field826) {
+         } else if (ServerProt.SET_TARGET == arg0.field826) {
             field2406 = var2.method1723();
             arg0.field826 = null;
             return true;
-         } else if (class567.field5026 == arg0.field826) {
+         } else if (ServerProt.IF_OPENSUB_ACTIVE_NPC == arg0.field826) {
             int var207 = var2.method1640();
             int var208 = var2.method1628();
             int var209 = var2.method1611();
@@ -8026,32 +8033,32 @@ public final class client extends class671 {
             method14630(var207, new class253(var210, var211, var208), new int[]{var209, var213, var212, var214}, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5058 == arg0.field826) {
+         } else if (ServerProt.SOUND_AREA == arg0.field826) {
             method14681(class530.field4179);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4972 == arg0.field826) {
+         } else if (ServerProt.VARP_SMALL == arg0.field826) {
             byte var215 = var2.method1622();
             int var216 = var2.method1628();
             Statics.field10637.method6145(var216, var215);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5121 == arg0.field826) {
+         } else if (ServerProt.IF_SETSCROLLPOS == arg0.field826) {
             int var217 = var2.method1629();
             int var218 = var2.method1640();
             method6863();
             class231.method14523(var218, var217);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5089 == arg0.field826) {
+         } else if (ServerProt.MAP_PROJANIM == arg0.field826) {
             method14681(class530.field4176);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5102 == arg0.field826) {
+         } else if (ServerProt.MAP_ANIM == arg0.field826) {
             method14681(class530.field4183);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5118 == arg0.field826) {
+         } else if (ServerProt.SYNTH_SOUND == arg0.field826) {
             int var219 = var2.method1587();
             if (var219 == 65535) {
                var219 = -1;
@@ -8064,7 +8071,7 @@ public final class client extends class671 {
             class677.method1342(var219, var220, var221, var222, var223);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5007 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_LONG == arg0.field826) {
             int var224 = var2.method1587();
             long var225 = var2.method1621();
             if (Statics.field3804 == null) {
@@ -8075,12 +8082,12 @@ public final class client extends class671 {
             field2633[++field2634 - 1 & 31] = var224;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4990 == arg0.field826) {
+         } else if (ServerProt.CAM_RESET == arg0.field826) {
             method6863();
             method6770();
             arg0.field826 = null;
             return true;
-         } else if (class567.field5106 == arg0.field826) {
+         } else if (ServerProt.UPDATE_FRIENDCHAT_CHANNEL_SINGLEUSER == arg0.field826) {
             String var227 = var2.method1599();
             boolean var228 = var2.method1688() == 1;
             String var229;
@@ -8172,7 +8179,7 @@ public final class client extends class671 {
             field2481 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5087 == arg0.field826) {
+         } else if (ServerProt.CAM_REMOVEROOF == arg0.field826) {
             int var240 = var2.method1639();
             method6863();
             if (var240 == -1) {
@@ -8202,27 +8209,27 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5093 == arg0.field826) {
+         } else if (ServerProt.UPDATE_SITESETTINGS_COOKIE == arg0.field826) {
             method15430(var2.method1599());
             arg0.field826 = null;
             return true;
-         } else if (class567.field5032 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_102 == arg0.field826) {
             Statics.field6495 = var2.method1590();
             field2635 = var2.method1688() == 1;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5015 == arg0.field826) {
+         } else if (ServerProt.IF_SETVIDEO == arg0.field826) {
             int var246 = var2.method1611();
             int var247 = var2.method1587();
             method6863();
             class231.method14237(var246, var247);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5073 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_111 == arg0.field826) {
             field2682 = var2.method1619() == 1;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4994 == arg0.field826) {
+         } else if (ServerProt.CAM2_ENABLE == arg0.field826) {
             boolean var248 = var2.method1688() == 1;
             if (var248) {
                Statics.field5998 = 2;
@@ -8232,7 +8239,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5002 == arg0.field826) {
+         } else if (ServerProt.REBUILD_REGION == arg0.field826) {
             class251 var249 = new class251(arg0.field829);
             System.arraycopy(arg0.field835.field931, arg0.field835.field935, var249.field931, 0, arg0.field829);
             method6227();
@@ -8244,12 +8251,12 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return false;
-         } else if (class567.field4971 == arg0.field826) {
+         } else if (ServerProt.CAM_SMOOTHRESET == arg0.field826) {
             method6863();
             Statics.method9678();
             arg0.field826 = null;
             return true;
-         } else if (class567.field5051 == arg0.field826) {
+         } else if (ServerProt.REBUILD_NORMAL == arg0.field826) {
             class251 var250 = new class251(arg0.field829);
             System.arraycopy(arg0.field835.field931, arg0.field835.field935, var250.field931, 0, arg0.field829);
             method6227();
@@ -8261,39 +8268,39 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return false;
-         } else if (class567.field5084 == arg0.field826) {
+         } else if (ServerProt.VIDEO_STOP == arg0.field826) {
             int var251 = var2.method1629();
             method6863();
             class817.method8682(var251);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5013 == arg0.field826) {
+         } else if (ServerProt.LOC_PREFETCH == arg0.field826) {
             method14681(class530.field4180);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5120 == arg0.field826) {
+         } else if (ServerProt.IF_SETNPCHEAD == arg0.field826) {
             int var252 = var2.method1591();
             int var253 = var2.method1639();
             method6863();
             class231.method15040(var253, 2, var252, -1);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5029 == arg0.field826) {
+         } else if (ServerProt.MINIMAP_TOGGLE == arg0.field826) {
             class299.field1882 = var2.method1688();
             arg0.field826 = null;
             return true;
-         } else if (class567.field5095 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_QUICKCHAT_PRIVATE_ECHO == arg0.field826) {
             String var254 = var2.method1599();
             int var255 = var2.method1587();
             String var256 = Statics.field8477.method15712(var255).method3581(var2);
             class419.method10662(19, 0, var254, var254, var254, var256, (String)null, var255);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5112 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_ENABLE == arg0.field826) {
             Statics.field3804 = new Object[Statics.field6159.field9424];
             arg0.field826 = null;
             return true;
-         } else if (class567.field5054 == arg0.field826) {
+         } else if (ServerProt.SONG_PRELOAD == arg0.field826) {
             int var257 = var2.method1587();
             if (var257 == 65535) {
                var257 = -1;
@@ -8302,7 +8309,7 @@ public final class client extends class671 {
             class677.method5942(var257);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5077 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_115 == arg0.field826) {
             int var258 = var2.method1611();
             int var259 = var2.method1629();
             int var260 = var2.method1628();
@@ -8311,19 +8318,19 @@ public final class client extends class671 {
             class231.method15040(var258, 7, var261 << 16 | var259, var260);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5016 == arg0.field826) {
+         } else if (ServerProt.UPDATE_RUN_WEIGHT == arg0.field826) {
             field2598 = var2.method1723();
             field2641 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5075 == arg0.field826) {
+         } else if (ServerProt.IF_SETHIDE == arg0.field826) {
             int var262 = var2.method1619();
             int var263 = var2.method1639();
             method6863();
             class231.method8534(var263, var262);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5047 == arg0.field826) {
+         } else if (ServerProt.SPOT_ANIM_SPECIFIC == arg0.field826) {
             int var264 = var2.method1591();
             int var265 = var2.method1587();
             if (var265 == 65535) {
@@ -8487,7 +8494,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5000 == arg0.field826) {
+         } else if (ServerProt.LAST_LOGIN_INFO == arg0.field826) {
             int var311 = var2.method1591();
             Statics.field2285 = new class358(var311);
             Thread var312 = new Thread(Statics.field2285);
@@ -8495,7 +8502,7 @@ public final class client extends class671 {
             var312.start();
             arg0.field826 = null;
             return true;
-         } else if (class567.field4964 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_GAME == arg0.field826) {
             int var313 = var2.method1604();
             int var314 = var2.method1591();
             int var315 = var2.method1688();
@@ -8526,7 +8533,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5067 == arg0.field826) {
+         } else if (ServerProt.CREATE_ACCOUNT_REPLY == arg0.field826) {
             int var319 = var2.method1688();
             class834 var320 = (class834)class814.method4102(class834.method9853(), var319);
             if (var320 == null) {
@@ -8536,10 +8543,10 @@ public final class client extends class671 {
             class825.method10749(var320);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4974 == arg0.field826) {
+         } else if (ServerProt.LOGOUT_LOBBY == arg0.field826) {
             arg0.field826 = null;
             return false;
-         } else if (class567.field5109 == arg0.field826) {
+         } else if (ServerProt.UPDATE_REBOOT_TIMER == arg0.field826) {
             if (method7373(field2410)) {
                field2479 = (int)((float)var2.method1587() * 2.5F);
             } else {
@@ -8549,7 +8556,7 @@ public final class client extends class671 {
             field2641 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4975 == arg0.field826) {
+         } else if (ServerProt.IF_SETPOSITION == arg0.field826) {
             int var321 = var2.method1591();
             int var322 = var2.method1632();
             int var323 = var2.method1754();
@@ -8557,7 +8564,7 @@ public final class client extends class671 {
             class231.method2068(var321, var323, var322);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4977 == arg0.field826) {
+         } else if (ServerProt.IF_CLOSESUB == arg0.field826) {
             int var324 = var2.method1639();
             method6863();
             class118 var325 = (class118)field2594.method15322((long)var324);
@@ -8572,7 +8579,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5046 == arg0.field826) {
+         } else if (ServerProt.IF_SETRETEX == arg0.field826) {
             int var326 = var2.method1587();
             int var327 = var2.method1778();
             int var328 = var2.method1780();
@@ -8581,7 +8588,7 @@ public final class client extends class671 {
             class231.method1313(var329, var327, var326, var328);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4989 == arg0.field826) {
+         } else if (ServerProt.UPDATE_FRIENDLIST == arg0.field826) {
             while(var2.field935 < arg0.field829) {
                boolean var330 = var2.method1688() == 1;
                String var331 = var2.method1599();
@@ -8696,7 +8703,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4967 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_CLANCHANNEL == arg0.field826) {
             boolean var352 = var2.method1688() == 1;
             String var353 = var2.method1599();
             long var354 = (long)var2.method1587();
@@ -8752,7 +8759,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5036 == arg0.field826) {
+         } else if (ServerProt.HINT_ARROW == arg0.field826) {
             int var367 = var2.method1688();
             int var368 = var367 >> 5;
             int var369 = var367 & 31;
@@ -8813,12 +8820,12 @@ public final class client extends class671 {
                arg0.field826 = null;
                return true;
             }
-         } else if (class567.field4981 == arg0.field826) {
+         } else if (ServerProt.RESET_CLIENT_VAR_CACHE == arg0.field826) {
             Statics.field10637.method6141();
             field2624 += 32;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5052 == arg0.field826) {
+         } else if (ServerProt.CREATE_CHECK_NAME_REPLY == arg0.field826) {
             int var372 = var2.method1688();
             class842 var373 = (class842)class814.method4102(class842.method7394(), var372);
             if (var373 == null) {
@@ -8828,7 +8835,7 @@ public final class client extends class671 {
             class825.method10026(var373);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5088 == arg0.field826) {
+         } else if (ServerProt.IF_SETTARGETPARAM == arg0.field826) {
             int var374 = var2.method1628();
             int var375 = var2.method1629();
             if (var375 == 65535) {
@@ -8863,35 +8870,35 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5072 == arg0.field826) {
+         } else if (ServerProt.JS5_RELOAD == arg0.field826) {
             class590.method15507();
             arg0.field826 = null;
             return false;
-         } else if (class567.field5022 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_154 == arg0.field826) {
             boolean var383 = var2.method1688() == 1;
             method6863();
             Statics.field9387 = var383;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5074 == arg0.field826) {
+         } else if (ServerProt.OBJ_REVEAL == arg0.field826) {
             method14681(class530.field4174);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5114 == arg0.field826) {
+         } else if (ServerProt.VARC_LARGE == arg0.field826) {
             int var384 = var2.method1591();
             int var385 = var2.method1629();
             method6863();
             class231.method3136(var385, var384);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5115 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_48 == arg0.field826) {
             if (field2593 != -1) {
                method10317(field2593, 0);
             }
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4970 == arg0.field826) {
+         } else if (ServerProt.UPDATE_INV_PARTIAL == arg0.field826) {
             int var386 = var2.method1587();
             int var387 = var2.method1688();
             boolean var388 = (var387 & 1) == 1;
@@ -8913,15 +8920,15 @@ public final class client extends class671 {
             field2625[++field2560 - 1 & 31] = var386;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5119 == arg0.field826) {
+         } else if (ServerProt.LOC_ANIM == arg0.field826) {
             method14681(class530.field4175);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5090 == arg0.field826) {
+         } else if (ServerProt.PLAYER_INFO == arg0.field826) {
             class324.method5205(var2, arg0.field829);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4965 == arg0.field826) {
+         } else if (ServerProt.IF_SETANGLE == arg0.field826) {
             int var392 = var2.method1780();
             int var393 = var2.method1591();
             int var394 = var2.method1587();
@@ -8930,7 +8937,7 @@ public final class client extends class671 {
             class231.method10474(var393, var394, var395, var392);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5027 == arg0.field826) {
+         } else if (ServerProt.UPDATE_ZONE_FULL_FOLLOWS == arg0.field826) {
             Statics.field6081 = var2.method1622() << 3;
             Statics.field9623 = var2.method1778();
             Statics.field1371 = var2.method1730() << 3;
@@ -8964,7 +8971,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4995 == arg0.field826) {
+         } else if (ServerProt.UPDATE_INV_STOP_TRANSMIT == arg0.field826) {
             int var405 = var2.method1778();
             int var406 = var2.method1587();
             boolean var407 = (var405 & 1) == 1;
@@ -8972,7 +8979,7 @@ public final class client extends class671 {
             field2625[++field2560 - 1 & 31] = var406;
             arg0.field826 = null;
             return true;
-         } else if (class567.field5108 == arg0.field826) {
+         } else if (ServerProt.IF_SETPLAYERHEAD_OTHER == arg0.field826) {
             int var408 = var2.method1640();
             int var409 = var2.method1611();
             int var410 = var2.method1629();
@@ -8980,27 +8987,27 @@ public final class client extends class671 {
             class231.method15040(var409, 3, var410, var408);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5104 == arg0.field826) {
+         } else if (ServerProt.WORLDLIST_FETCH_REPLY == arg0.field826) {
             boolean var411 = var2.method1688() == 1;
             byte[] var412 = new byte[arg0.field829 - 1];
             var2.method1602(var412, 0, arg0.field829 - 1);
             Statics.method17066(var411, var412);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5044 == arg0.field826) {
+         } else if (ServerProt.VARP_LARGE == arg0.field826) {
             int var413 = var2.method1611();
             int var414 = var2.method1629();
             Statics.field10637.method6145(var414, var413);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5064 == arg0.field826) {
+         } else if (ServerProt.VIDEO_START == arg0.field826) {
             int var415 = var2.method1628();
             int var416 = var2.method1579();
             method6863();
             class817.method486(var415, var416, true);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5001 == arg0.field826) {
+         } else if (ServerProt.MIDI_SONG == arg0.field826) {
             int var417 = var2.method1587();
             if (var417 == 65535) {
                var417 = -1;
@@ -9011,7 +9018,7 @@ public final class client extends class671 {
             class677.method5269(var417, var418, var419);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5050 == arg0.field826) {
+         } else if (ServerProt.RESET_ALL_ANIMATIONS == arg0.field826) {
             for(int var420 = 0; var420 < field2408.length; ++var420) {
                if (field2408[var420] != null) {
                   field2408[var420].field41 = null;
@@ -9026,13 +9033,13 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5011 == arg0.field826) {
+         } else if (ServerProt.IF_SETPLAYERHEAD == arg0.field826) {
             int var422 = var2.method1591();
             method6863();
             class231.method15040(var422, 3, field2452, 0);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5063 == arg0.field826) {
+         } else if (ServerProt.SET_MAP_FLAG == arg0.field826) {
             int var423 = var2.method1619();
             int var424 = var2.method1688();
             if (var424 == 255) {
@@ -9043,11 +9050,11 @@ public final class client extends class671 {
             class231.method8899(var424, var423);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5100 == arg0.field826) {
+         } else if (ServerProt.VORBIS_SPEECH_STOP == arg0.field826) {
             Statics.method10030();
             arg0.field826 = null;
             return true;
-         } else if (class567.field4993 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_QUICKCHAT_PRIVATE == arg0.field826) {
             boolean var425 = var2.method1688() == 1;
             String var426 = var2.method1599();
             String var427 = var426;
@@ -9094,7 +9101,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5082 == arg0.field826) {
+         } else if (ServerProt.SERVER_REPLY == arg0.field826) {
             byte[] var439 = new byte[arg0.field829];
             var2.method3388(var439, 0, arg0.field829);
             String var440 = Statics.method5675(var439, 0, arg0.field829);
@@ -9107,7 +9114,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5083 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_121 == arg0.field826) {
             int var442 = var2.method1587();
             int var443 = var2.method1587();
             int var444 = var2.method1587();
@@ -9123,7 +9130,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5065 == arg0.field826) {
+         } else if (ServerProt.UNKNOWN_13 == arg0.field826) {
             int var447 = var2.method1780();
             int var448 = var2.method1611();
             int var449 = var2.method1628();
@@ -9131,7 +9138,7 @@ public final class client extends class671 {
             class231.method5387(var448, (var447 << 16) + var449);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5098 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_PRIVATE == arg0.field826) {
             boolean var450 = var2.method1688() == 1;
             String var451 = var2.method1599();
             String var452 = var451;
@@ -9183,7 +9190,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5124 == arg0.field826) {
+         } else if (ServerProt.UPDATE_ZONE_PARTIAL_ENCLOSED == arg0.field826) {
             Statics.field9623 = var2.method1688();
             Statics.field6081 = var2.method1622() << 3;
             Statics.field1371 = var2.method1594() << 3;
@@ -9195,7 +9202,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5028 == arg0.field826) {
+         } else if (ServerProt.LOC_ANIM_SPECIFIC == arg0.field826) {
             int var464 = var2.method1619();
             int var465 = var464 >> 2;
             int var466 = var464 & 3;
@@ -9211,7 +9218,7 @@ public final class client extends class671 {
             method8761(var469, var474, var475, var467, var465, var466, var472);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4969 == arg0.field826) {
+         } else if (ServerProt.IF_OPENSUB_ACTIVE_LOC == arg0.field826) {
             int var476 = var2.method1639();
             int var477 = var2.method1639();
             int var478 = var2.method1619();
@@ -9228,11 +9235,11 @@ public final class client extends class671 {
             method14630(var482, new class269(var481, var486, new class779(var483, var479, var480, var484)), new int[]{var485, var476, var487, var477}, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5037 == arg0.field826) {
+         } else if (ServerProt.LOC_ADD_CHANGE == arg0.field826) {
             method14681(class530.field4177);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4978 == arg0.field826) {
+         } else if (ServerProt.IF_SETEVENTS == arg0.field826) {
             int var488 = var2.method1780();
             if (var488 == 65535) {
                var488 = -1;
@@ -9267,19 +9274,19 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5033 == arg0.field826) {
+         } else if (ServerProt.OBJ_DEL == arg0.field826) {
             method14681(class530.field4181);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5094 == arg0.field826) {
+         } else if (ServerProt.LOC_MERGE == arg0.field826) {
             method14681(class530.field4184);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5111 == arg0.field826) {
+         } else if (ServerProt.CAMERA_UPDATE == arg0.field826) {
             Statics.field6895.method244(var2, arg0.field829);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5068 == arg0.field826) {
+         } else if (ServerProt.IF_OPENSUB_ACTIVE_PLAYER == arg0.field826) {
             int var497 = var2.method1639();
             int var498 = var2.method1629();
             int var499 = var2.method1619();
@@ -9292,7 +9299,7 @@ public final class client extends class671 {
             method14630(var500, new class250(var503, var499, var498), new int[]{var501, var504, var502, var497}, false);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5041 == arg0.field826) {
+         } else if (ServerProt.LOYALTY_UPDATE == arg0.field826) {
             boolean var505 = var2.method1579() == 1;
             int var506 = var2.method1611();
             if (Statics.field7164 != var505 || Statics.field8650 != var506) {
@@ -9303,18 +9310,18 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field4992 == arg0.field826) {
+         } else if (ServerProt.OBJ_ADD == arg0.field826) {
             method14681(class530.field4173);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5012 == arg0.field826) {
+         } else if (ServerProt.VARCSTR_SMALL == arg0.field826) {
             int var507 = var2.method1587();
             String var508 = var2.method1599();
             method6863();
             class231.method9268(var507, var508);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5030 == arg0.field826) {
+         } else if (ServerProt.UPDATE_GE_SLOT == arg0.field826) {
             int var509 = var2.method1688();
             if (var2.method1688() == 0) {
                field2681[var509] = new class634();
@@ -9326,30 +9333,30 @@ public final class client extends class671 {
             field2611 = field2447;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4997 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_PRIVATE_ECHO == arg0.field826) {
             String var510 = var2.method1599();
             String var511 = Statics.method9135(class450.method14241(var2));
             class419.method3849(6, 0, var510, var510, var510, var511);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4984 == arg0.field826) {
+         } else if (ServerProt.VARC_SMALL == arg0.field826) {
             byte var512 = var2.method1594();
             int var513 = var2.method1780();
             method6863();
             class231.method3136(var513, var512);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5024 == arg0.field826) {
+         } else if (ServerProt.SEND_PING == arg0.field826) {
             int var514 = var2.method1591();
             int var515 = var2.method1591();
-            class109 var516 = class109.method15110(class558.field4872, arg0.field832);
+            class109 var516 = class109.method15110(ClientProt.SEND_PING_REPLY, arg0.field832);
             var516.field814.method1772(field6099);
             var516.field814.method1572(var514);
             var516.field814.method1635(var515);
             arg0.method1408(var516);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5006 == arg0.field826) {
+         } else if (ServerProt.MESSAGE_QUICKCHAT_FRIENDCHAT == arg0.field826) {
             boolean var517 = var2.method1688() == 1;
             String var518 = var2.method1599();
             String var519 = var518;
@@ -9397,21 +9404,21 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5005 == arg0.field826) {
+         } else if (ServerProt.IF_SETCOLOUR == arg0.field826) {
             int var533 = var2.method1629();
             int var534 = var2.method1639();
             method6863();
             class231.method5487(var534, var533);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5014 == arg0.field826) {
+         } else if (ServerProt.SET_SONG_VOLUME == arg0.field826) {
             byte var535 = var2.method1623();
             int var536 = var2.method1619();
             method6863();
             class677.method6642(var535, var536);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5025 == arg0.field826) {
+         } else if (ServerProt.PROJ_ANIM_SPECIFIC == arg0.field826) {
             int var537 = var2.method1629();
             int var538 = var2.method1628();
             int var539 = var2.method1579() * 4;
@@ -9458,7 +9465,7 @@ public final class client extends class671 {
 
             arg0.field826 = null;
             return true;
-         } else if (class567.field5020 == arg0.field826) {
+         } else if (ServerProt.UPDATE_FRIENDCHAT_CHANNEL_FULL == arg0.field826) {
             field2481 = field2447;
             if (arg0.field829 == 0) {
                field2578 = null;
@@ -9530,7 +9537,7 @@ public final class client extends class671 {
                   return true;
                }
             }
-         } else if (class567.field4988 == arg0.field826) {
+         } else if (ServerProt.VORBIS_SPEECH_SOUND == arg0.field826) {
             int var579 = var2.method1587();
             if (var579 == 65535) {
                var579 = -1;
@@ -9542,22 +9549,22 @@ public final class client extends class671 {
             class677.method6230(var579, var580, var581, var582, true, 256);
             arg0.field826 = null;
             return true;
-         } else if (class567.field4986 == arg0.field826) {
+         } else if (ServerProt.REFLECTION_CHECKER == arg0.field826) {
             class896.method2289(var2, arg0.field829);
             arg0.field826 = null;
             return true;
-         } else if (class567.field5049 == arg0.field826) {
+         } else if (ServerProt.VARCLAN_DISABLE == arg0.field826) {
             Statics.field3804 = null;
             arg0.field826 = null;
             return true;
-         } else if (class567.field4968 == arg0.field826) {
+         } else if (ServerProt.UPDATE_ZONE_PARTIAL_FOLLOWS == arg0.field826) {
             Statics.field1371 = var2.method1622() << 3;
             Statics.field6081 = var2.method1622() << 3;
             Statics.field9623 = var2.method1688();
             arg0.field826 = null;
             return true;
-         } else if (class567.field5023 != arg0.field826) {
-            if (class567.field5123 == arg0.field826) {
+         } else if (ServerProt.URL_OPEN != arg0.field826) {
+            if (ServerProt.CLANSETTINGS_DELTA == arg0.field826) {
                field2638 = field2447;
                boolean var588 = var2.method1688() == 1;
                class471 var589 = new class471(var2);
@@ -9571,7 +9578,7 @@ public final class client extends class671 {
                var589.method6616(var590);
                arg0.field826 = null;
                return true;
-            } else if (class567.field4982 == arg0.field826) {
+            } else if (ServerProt.CAM_MOVETO == arg0.field826) {
                int var591 = var2.method1579();
                int var592 = var2.method1778();
                int var593 = var2.method1628() << 2;
@@ -9581,25 +9588,25 @@ public final class client extends class671 {
                method9870(var591, var592, var593, var594, var595, true);
                arg0.field826 = null;
                return true;
-            } else if (class567.field5034 == arg0.field826) {
+            } else if (ServerProt.NPC_INFO == arg0.field826) {
                method5211(false);
                arg0.field826 = null;
                return true;
-            } else if (class567.field5045 == arg0.field826) {
+            } else if (ServerProt.IF_SETTEXT_ANTIMACRO == arg0.field826) {
                boolean var596 = var2.method1778() == 1;
                int var597 = var2.method1639();
                method6863();
                class231.method11349(var597, var596);
                arg0.field826 = null;
                return true;
-            } else if (class567.field5086 == arg0.field826) {
+            } else if (ServerProt.VARP_BIT_SMALL == arg0.field826) {
                int var598 = var2.method1780();
                int var599 = var2.method1579();
                Statics.field10637.method6146(var598, var599);
                arg0.field826 = null;
                return true;
             } else {
-               class285.method15864((arg0.field826 != null ? arg0.field826.field5125 : -1) + class582.field5306 + (arg0.field838 != null ? arg0.field838.field5125 : -1) + class582.field5306 + (arg0.field839 != null ? arg0.field839.field5125 : -1) + " " + arg0.field829, new RuntimeException());
+               class285.method15864((arg0.field826 != null ? arg0.field826.getOpcode() : -1) + class582.field5306 + (arg0.field838 != null ? arg0.field838.getOpcode() : -1) + class582.field5306 + (arg0.field839 != null ? arg0.field839.getOpcode() : -1) + " " + arg0.field829, new RuntimeException());
                method5519(false);
                return true;
             }
@@ -10859,19 +10866,19 @@ public final class client extends class671 {
       for(int var5 = 0; var5 < var2; ++var5) {
          class211 var6 = field2408[var3[var5]];
          if (var6 != null && Statics.field5701 != var6 && var6.field1381 != null && var6.field1381.equalsIgnoreCase(arg1)) {
-            class558 var7 = null;
+            ClientPacket var7 = null;
             if (arg0 == 1) {
-               var7 = class558.field4825;
+               var7 = ClientProt.OPPLAYER1;
             } else if (arg0 == 4) {
-               var7 = class558.field4885;
+               var7 = ClientProt.OPPLAYER4;
             } else if (arg0 == 5) {
-               var7 = class558.field4860;
+               var7 = ClientProt.OPPLAYER5;
             } else if (arg0 == 6) {
-               var7 = class558.field4815;
+               var7 = ClientProt.OPPLAYER6;
             } else if (arg0 == 7) {
-               var7 = class558.field4816;
+               var7 = ClientProt.OPPLAYER7;
             } else if (arg0 == 9) {
-               var7 = class558.field4834;
+               var7 = ClientProt.OPPLAYER9;
             }
 
             if (var7 != null) {
@@ -10902,7 +10909,7 @@ public final class client extends class671 {
          for(int var4 = 0; var4 < var2; ++var4) {
             class211 var5 = field2408[var3[var4]];
             if (var5.field1381 != null && var5.field1381.equalsIgnoreCase(arg0) && (Statics.field5701 == var5 && (Statics.field9110 & 16) != 0 || (Statics.field9110 & 8) != 0)) {
-               class109 var6 = class109.method15110(class558.field4887, field2463.field832);
+               class109 var6 = class109.method15110(ClientProt.OPPLAYERT, field2463.field832);
                var6.field814.method1718(field2622);
                var6.field814.method1738(0);
                var6.field814.method1627(var3[var4]);
@@ -10972,7 +10979,7 @@ public final class client extends class671 {
 
    @deob.ObfuscatedName("du.ju(IIB)V")
    public static void method5536(int arg0, int arg1) {
-      class109 var2 = class109.method15110(class558.field4864, field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.RESUME_PAUSEBUTTON, field2463.field832);
       var2.field814.method1636(arg0);
       var2.field814.method1627(arg1);
       field2463.method1408(var2);
@@ -10980,7 +10987,7 @@ public final class client extends class671 {
 
    @deob.ObfuscatedName("nm.ja(Lem;Lem;I)V")
    private static void method9886(class425 arg0, class425 arg1) {
-      class109 var2 = class109.method15110(class558.field4788, field2463.field832);
+      class109 var2 = class109.method15110(ClientProt.IF_BUTTOND, field2463.field832);
       var2.field814.method1635(arg1.field3465);
       var2.field814.method1750(arg0.field3539);
       var2.field814.method1572(arg0.field3465);
@@ -11004,7 +11011,7 @@ public final class client extends class671 {
             }
          }
 
-         class109 var3 = class109.method15110(class558.field4837, field2463.field832);
+         class109 var3 = class109.method15110(ClientProt.IF_BUTTONT, field2463.field832);
          var3.field814.method1635(Statics.field4335);
          var3.field814.method1718(arg0.field3401);
          var3.field814.method1635(arg0.field3465);
@@ -11032,61 +11039,61 @@ public final class client extends class671 {
             class110 var6 = Statics.method8951();
             if (field2410 == 15 || field2410 == 1) {
                if (arg0 == 1) {
-                  class109 var7 = class109.method15110(class558.field4831, var6.field832);
+                  class109 var7 = class109.method15110(ClientProt.IF_BUTTON1, var6.field832);
                   method14917(var7, arg1, arg2, var4.field3539);
                   var6.method1408(var7);
                }
 
                if (arg0 == 2) {
-                  class109 var8 = class109.method15110(class558.field4803, var6.field832);
+                  class109 var8 = class109.method15110(ClientProt.IF_BUTTON2, var6.field832);
                   method14917(var8, arg1, arg2, var4.field3539);
                   var6.method1408(var8);
                }
 
                if (arg0 == 3) {
-                  class109 var9 = class109.method15110(class558.field4828, var6.field832);
+                  class109 var9 = class109.method15110(ClientProt.IF_BUTTON3, var6.field832);
                   method14917(var9, arg1, arg2, var4.field3539);
                   var6.method1408(var9);
                }
 
                if (arg0 == 4) {
-                  class109 var10 = class109.method15110(class558.field4857, var6.field832);
+                  class109 var10 = class109.method15110(ClientProt.IF_BUTTON4, var6.field832);
                   method14917(var10, arg1, arg2, var4.field3539);
                   var6.method1408(var10);
                }
 
                if (arg0 == 5) {
-                  class109 var11 = class109.method15110(class558.field4791, var6.field832);
+                  class109 var11 = class109.method15110(ClientProt.IF_BUTTON5, var6.field832);
                   method14917(var11, arg1, arg2, var4.field3539);
                   var6.method1408(var11);
                }
 
                if (arg0 == 6) {
-                  class109 var12 = class109.method15110(class558.field4884, var6.field832);
+                  class109 var12 = class109.method15110(ClientProt.IF_BUTTON6, var6.field832);
                   method14917(var12, arg1, arg2, var4.field3539);
                   var6.method1408(var12);
                }
 
                if (arg0 == 7) {
-                  class109 var13 = class109.method15110(class558.field4818, var6.field832);
+                  class109 var13 = class109.method15110(ClientProt.IF_BUTTON7, var6.field832);
                   method14917(var13, arg1, arg2, var4.field3539);
                   var6.method1408(var13);
                }
 
                if (arg0 == 8) {
-                  class109 var14 = class109.method15110(class558.field4850, var6.field832);
+                  class109 var14 = class109.method15110(ClientProt.IF_BUTTON8, var6.field832);
                   method14917(var14, arg1, arg2, var4.field3539);
                   var6.method1408(var14);
                }
 
                if (arg0 == 9) {
-                  class109 var15 = class109.method15110(class558.field4861, var6.field832);
+                  class109 var15 = class109.method15110(ClientProt.IF_BUTTON9, var6.field832);
                   method14917(var15, arg1, arg2, var4.field3539);
                   var6.method1408(var15);
                }
 
                if (arg0 == 10) {
-                  class109 var16 = class109.method15110(class558.field4811, var6.field832);
+                  class109 var16 = class109.method15110(ClientProt.IF_BUTTON10, var6.field832);
                   method14917(var16, arg1, arg2, var4.field3539);
                   var6.method1408(var16);
                }
@@ -13066,7 +13073,7 @@ public final class client extends class671 {
 
    @deob.ObfuscatedName("mt.kw(ZI)V")
    public static final void method9491(boolean arg0) {
-      class109 var1 = class109.method15110(class558.field4854, field2463.field832);
+      class109 var1 = class109.method15110(ClientProt.CLOSE_MODAL, field2463.field832);
       field2463.method1408(var1);
 
       for(class118 var2 = (class118)field2594.method15313(); var2 != null; var2 = (class118)field2594.method15314()) {
@@ -13219,7 +13226,7 @@ public final class client extends class671 {
    @deob.ObfuscatedName("rx.kl(Ljava/lang/String;II)V")
    public static final void method14202(String arg0, int arg1) {
       class110 var2 = Statics.method8951();
-      class109 var3 = class109.method15110(class558.field4808, var2.field832);
+      class109 var3 = class109.method15110(ClientProt.FRIEND_SETRANK, var2.field832);
       var3.field814.method1568(1 + class124.method1229(arg0));
       var3.field814.method1577(arg0);
       var3.field814.method1616(arg1);
@@ -13229,7 +13236,7 @@ public final class client extends class671 {
    @deob.ObfuscatedName("de.le(B)V")
    public static final void method5382() {
       class110 var0 = Statics.method8951();
-      class109 var1 = class109.method15110(class558.field4865, var0.field832);
+      class109 var1 = class109.method15110(ClientProt.CLAN_JOINCHAT_LEAVECHAT, var0.field832);
       var1.field814.method1568(0);
       var0.method1408(var1);
    }
@@ -13242,7 +13249,7 @@ public final class client extends class671 {
          if (var3.field3852 == -1) {
             String var4 = var3.field3851;
             class110 var5 = Statics.method8951();
-            class109 var6 = class109.method15110(class558.field4790, var5.field832);
+            class109 var6 = class109.method15110(ClientProt.CLANCHANNEL_KICK_USER, var5.field832);
             var6.field814.method1568(3 + class124.method1229(var4));
             var6.field814.method1568(arg0 ? 1 : 0);
             var6.field814.method1569(arg1);
@@ -13259,7 +13266,7 @@ public final class client extends class671 {
             class472 var1 = Statics.field4336.field621[arg0];
             if (var1.field3852 == -1) {
                class110 var2 = Statics.method8951();
-               class109 var3 = class109.method15110(class558.field4796, var2.field832);
+               class109 var3 = class109.method15110(ClientProt.AFFINED_CLANSETTINGS_ADD_BANNED_FROM_CHANNEL, var2.field832);
                var3.field814.method1568(2 + class124.method1229(var1.field3851));
                var3.field814.method1569(arg0);
                var3.field814.method1577(var1.field3851);
@@ -13313,7 +13320,7 @@ public final class client extends class671 {
                   class419.method10919(4, class881.field8902.method15374(Statics.field243));
                } else {
                   class110 var10 = Statics.method8951();
-                  class109 var11 = class109.method15110(class558.field4852, var10.field832);
+                  class109 var11 = class109.method15110(ClientProt.FRIENDLIST_ADD, var10.field832);
                   var11.field814.method1568(class124.method1229(arg0));
                   var11.field814.method1577(arg0);
                   var10.method1408(var11);
@@ -13343,7 +13350,7 @@ public final class client extends class671 {
 
                   field2524 = field2447;
                   class110 var7 = Statics.method8951();
-                  class109 var8 = class109.method15110(class558.field4862, var7.field832);
+                  class109 var8 = class109.method15110(ClientProt.FRIENDLIST_DEL, var7.field832);
                   var8.field814.method1568(class124.method1229(arg0));
                   var8.field814.method1577(arg0);
                   var7.method1408(var8);
@@ -13373,7 +13380,7 @@ public final class client extends class671 {
 
                   field2524 = field2447;
                   class110 var7 = Statics.method8951();
-                  class109 var8 = class109.method15110(class558.field4798, var7.field832);
+                  class109 var8 = class109.method15110(ClientProt.IGNORELIST_DEL, var7.field832);
                   var8.field814.method1568(class124.method1229(arg0));
                   var8.field814.method1577(arg0);
                   var7.method1408(var8);
@@ -13467,7 +13474,7 @@ public final class client extends class671 {
 
    @deob.ObfuscatedName("wk.lx(I)V")
    private static void method15827() {
-      class109 var0 = class109.method15110(class558.field4785, field2463.field832);
+      class109 var0 = class109.method15110(ClientProt.TRANSMITVAR_VERIFYID, field2463.field832);
       var0.field814.method1572(field2465);
       field2463.method1408(var0);
    }
@@ -13618,3 +13625,4 @@ public final class client extends class671 {
       field2577.method14959(new class246(var21));
    }
 }
+
