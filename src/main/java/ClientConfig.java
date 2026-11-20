@@ -19,7 +19,7 @@ public final class ClientConfig {
    public static final int ZOOM_MAX = 150000;                  /** Furthest camera zoom (thousandths), Ctrl+scroll upper bound. */
    public static final int RENDER_DISTANCE_MIN = 50;           /** Smallest render distance percent, Alt+scroll lower bound. */
    public static final int RENDER_DISTANCE_MAX = 0;            /** Largest render distance percent; 0 uses the scene's own limit. */
-   public static final boolean PACKET_LOGGING = true;            /** Print every game packet's name, id and size to the console. */
+   public static final boolean PACKET_LOGGING = true;          /** Print every game packet's name, id and size to the console. */
 
    private ClientConfig() {
    }

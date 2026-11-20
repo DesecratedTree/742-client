@@ -1,4 +1,5 @@
 import java.io.IOException;
+import net.ClientPacket;
 import net.ServerProt;
 
 @deob.ObfuscatedName("ae")
@@ -87,7 +88,12 @@ public class class110 {
       this.field822.method14959(arg0);
       arg0.field816 = arg0.field814.field935;
       if (ClientConfig.PACKET_LOGGING) {
-         System.out.println("[Outgoing] Packet " + arg0.field815.getName() + " ID " + arg0.field815.getOpcode() + " (size " + arg0.field816 + " bytes) sent");
+         ClientPacket var2 = arg0.field815;
+         if (var2 == null) {
+            System.out.println("[Outgoing] Raw packet (size " + arg0.field816 + " bytes) sent");
+         } else {
+            System.out.println("[Outgoing] Packet " + var2.getName() + " ID " + var2.getOpcode() + " (size " + arg0.field816 + " bytes) sent");
+         }
       }
 
       arg0.field814.field935 = 0;
